@@ -99,25 +99,27 @@
 @endphp
 
 <li>
-    <a 
+    <a
         href="{{ $href }}"
         wire:navigate
         {{ $attributes->merge([
-            'class' => 'transition-all duration-150 px-4 py-2 rounded-xl capitalize font-semibold flex items-center gap-2 ' . 
-                        ($active 
-                            ? 'bg-blue-deep-solid text-white mx-2' 
+            'class' => 'sidebar-leaf group/nav relative transition-all duration-150 px-2 mx-2 py-2 rounded-xl capitalize font-semibold flex items-center gap-2 ' .
+                        ($active
+                            ? 'bg-blue-deep-solid text-white'
                             : 'hover:bg-blue-deep-solid text-gray-200')
         ]) }}
-        
+
     >
         @if($iconName)
-            <iconify-icon 
+            <iconify-icon
                 icon="{{ $active ? $iconName['active'] : $iconName['inactive'] }}"
                 width="24"
-                height="24">
+                height="24"
+                class="shrink-0">
             </iconify-icon>
         @endif
 
-        {{ $slot }}
+        <span class="sidebar-label">{{ $slot }}</span>
+        <span class="sidebar-tooltip" aria-hidden="true">{{ $slot }}</span>
     </a>
 </li>

@@ -8,17 +8,24 @@
         $canAccessRoute = fn (string $routeName) => \App\Support\PermissionRegistry::canAccessRoute($user, $routeName);
         $canAccessGroup = fn (string $groupName) => \App\Support\PermissionRegistry::canAccessGroup($user, $groupName);
         $canAccessPrefix = fn (string $prefix) => \App\Support\PermissionRegistry::canAccessUriPrefix($user, $prefix);
+        // Server-readable sidebar state (mirror of the client localStorage key,
+        // written by Alpine $watch on every toggle). Lets Blade render the correct
+        // collapsed class BEFORE any client JS runs, so neither full loads nor
+        // wire:navigate swaps ever paint the wrong state first.
+        $isSidebarCollapsed = request()->cookie('sidebar-collapsed') === '1';
     @endphp
     <aside
-        class="fixed md:static top-0 right-0 z-50 flex h-screen w-64 md:w-80 flex-col p-1 rounded-tl-4xl md:rounded-tl-none md:rounded-tr-4xl border-r border-white/10 bg-gradient-to-b from-blue-deep to-[#03152d] shadow-[8px_0_30px_rgba(0,0,0,0.15)] transition-transform duration-300"
-        :class="openside ? 'translate-x-0' : 'translate-x-full md:translate-x-0'"
+        id="app-sidebar"
+        aria-label="Sidebar navigasi utama"
+        class="fixed md:sticky top-0 right-0 md:right-auto md:left-0 z-50 flex h-screen w-64 md:w-80 shrink-0 flex-col p-1 rounded-tl-4xl md:rounded-tl-none md:rounded-tr-4xl border-r border-white/10 bg-gradient-to-b from-blue-deep to-[#03152d] shadow-[8px_0_30px_rgba(0,0,0,0.15)] relative{{ $isSidebarCollapsed ? ' sidebar-collapsed' : '' }}"
+        :class="{ 'translate-x-0': openside, 'translate-x-full md:translate-x-0': !openside, 'sidebar-collapsed': isSidebarCollapsed }"
     >
         <!-- header -->
-        <div class="flex items-center justify-start pl-5 md:pl-10 gap-4 pt-4">
-            <img src="{{ $siteLogo }}" class="w-10" alt="">
+        <div class="sidebar-header flex items-center justify-start px-2 gap-4 pt-4">
+            <img src="{{ $siteLogo }}" class="sidebar-logo w-10 shrink-0" alt="">
 
-            <div>
-                <h1 class="text-start text-sm font-semibold uppercase text-white text-shadow-2xs">
+            <div class="sidebar-header-text sidebar-label min-w-0">
+                <h1 class="text-start text-sm font-semibold uppercase text-white text-shadow-2xs truncate">
                     {{ $siteName }}
                 </h1>
 
@@ -26,6 +33,23 @@
                     smkn 2 banjarmasin
                 </p>
             </div>
+
+            <!-- toggle collapse (desktop only, mobile uses drawer) -->
+            <button
+                type="button"
+                @click="isSidebarCollapsed = !isSidebarCollapsed"
+                :aria-expanded="(!isSidebarCollapsed).toString()"
+                :aria-label="isSidebarCollapsed ? 'Expand sidebar' : 'Collapse sidebar'"
+                :title="isSidebarCollapsed ? 'Expand sidebar' : 'Collapse sidebar'"
+                aria-controls="app-sidebar"
+                class="sidebar-toggle ml-auto mr-2 hidden shrink-0 items-center justify-center rounded-lg p-2 text-gray-200 transition-colors hover:bg-blue-deep-solid hover:text-white focus-visible:outline-2 focus-visible:outline-white md:flex"
+            >
+                <iconify-icon
+                    :icon="isSidebarCollapsed ? 'lucide:panel-left-open' : 'lucide:panel-left-close'"
+                    width="24"
+                    height="24"
+                ></iconify-icon>
+            </button>
         </div>
 
         <hr class="mt-5 text-white">
@@ -52,98 +76,89 @@
 
             <!-- laporan -->
             @if($canAccessGroup('Laporan'))
-            <li x-data="{open: $persist({{ request()->routeIs(['rekap-*', 'laporan-*', 'riwayat-absen-*', 'cetak-izin-*']) ? 'true' : 'false' }}).using(sessionStorage).as('sidebar-laporan')}">
-                <button
+            <li class="sidebar-group-wrap relative" x-data="{open: $persist({{ request()->routeIs(['rekap-*', 'laporan-*', 'riwayat-absen-*', 'cetak-izin-*']) ? 'true' : 'false' }}).using(sessionStorage).as('sidebar-laporan')}">
+                <button x-bind:aria-expanded="open.toString()" aria-haspopup="true"
                     @click="open = !open"
-                    class="flex w-full items-center justify-between rounded-lg px-4 py-2 text-white hover:bg-blue-deep-solid"
+                    class="sidebar-group-btn relative flex w-full items-center justify-between rounded-lg px-4 py-2 text-white hover:bg-blue-deep-solid"
                 >
-                    <span class="flex items-center gap-2 capitalize">
+                    <span class="flex items-center gap-2 capitalize min-w-0">
                         <iconify-icon
                             :icon="open ? 'mdi:folder-text' : 'mdi:folder-text-outline'"
                             width="24"
                             height="24"
-                        ></iconify-icon>
-
-                        laporan
-                    </span>
+                        ></iconify-icon><span class="sidebar-label">laporan</span></span>
 
                     <iconify-icon
-                        class="transition-transform"
+                        class="sidebar-chevron shrink-0 transition-transform"
                         :class="{ 'rotate-180': open }"
                         icon="lineicons:chevron-up"
                         width="25"
                         height="24"
                     ></iconify-icon>
-                </button>
+                <span class="sidebar-tooltip" aria-hidden="true">laporan</span></button>
 
                 <ul
                 x-show="open"
                 x-transition
-                class="ml-4 mt-2 flex flex-col gap-2"
+                class="sidebar-submenu ml-4 mt-2 flex flex-col gap-2"
                 style="display: none;"
-                >   
+                >
                     <!-- laporan pengawas -->
                     @if($canAccessPrefix('/laporan-pengawas'))
-                    <li x-data="{open: $persist({{ request()->routeIs(['laporan-*', 'cetak-izin-*']) ? 'true' : 'false' }}).using(sessionStorage).as('sidebar-pengawas')}">
-                        
-                        <button
+                    <li class="sidebar-group-wrap relative" x-data="{open: $persist({{ request()->routeIs(['laporan-*', 'cetak-izin-*']) ? 'true' : 'false' }}).using(sessionStorage).as('sidebar-pengawas')}">
+
+                        <button x-bind:aria-expanded="open.toString()" aria-haspopup="true"
                             @click="open = !open"
-                            class="flex w-full items-center justify-between rounded-lg px-4 py-2 text-white hover:bg-blue-deep-solid"
+                            class="sidebar-group-btn relative flex w-full items-center justify-between rounded-lg px-4 py-2 text-white hover:bg-blue-deep-solid"
                         >
-                            <span class="flex items-center gap-2 capitalize">
+                            <span class="flex items-center gap-2 capitalize min-w-0">
                                 <iconify-icon
                                     :icon="open ? 'mdi:folder-eye' : 'mdi:folder-eye-outline'"
                                     width="24"
                                     height="24"
-                                ></iconify-icon>
-
-                                pengawas
-                            </span>
+                                ></iconify-icon><span class="sidebar-label">pengawas</span></span>
                             <iconify-icon
-                                class="transition-transform"
+                                class="sidebar-chevron shrink-0 transition-transform"
                                 :class="{ 'rotate-180': open }"
                                 icon="lineicons:chevron-up"
                                 width="25"
                                 height="24"
                             ></iconify-icon>
-                        </button>
+                        <span class="sidebar-tooltip" aria-hidden="true">pengawas</span></button>
 
                         <ul
                             x-show="open"
                             x-transition
-                            class="ml-4 mt-2 flex flex-col gap-2"
+                            class="sidebar-submenu ml-4 mt-2 flex flex-col gap-2"
                             style="display: none;"
-                        >   
+                        >
                             {{-- izin keluar --}}
-                            <li x-data="{open: $persist({{ request()->routeIs(['laporan-izin-keluar', 'cetak-izin-keluar']) ? 'true' : 'false' }}).using(sessionStorage).as('sidebar-izin-keluar')}" >
-                                <button
+                            <li class="sidebar-group-wrap relative" x-data="{open: $persist({{ request()->routeIs(['laporan-izin-keluar', 'cetak-izin-keluar']) ? 'true' : 'false' }}).using(sessionStorage).as('sidebar-izin-keluar')}" >
+                                <button x-bind:aria-expanded="open.toString()" aria-haspopup="true"
                                     @click="open = !open"
-                                    class="flex w-full items-center justify-between rounded-lg px-4 py-2 text-white hover:bg-blue-deep-solid"
+                                    class="sidebar-group-btn relative flex w-full items-center justify-between rounded-lg px-4 py-2 text-white hover:bg-blue-deep-solid"
                                 >
-                                    <span class="flex items-center gap-2 capitalize">
+                                    <span class="flex items-center gap-2 capitalize min-w-0">
                                         <iconify-icon
                                             :icon="open ? 'mdi:folder-file' : 'mdi:folder-file-outline'"
                                             width="24"
                                             height="24"
-                                        ></iconify-icon>
-    
-                                        izin keluar
-                                    </span>
+                                        ></iconify-icon><span class="sidebar-label">izin keluar</span></span>
                                     <iconify-icon
-                                        class="transition-transform"
+                                        class="sidebar-chevron shrink-0 transition-transform"
                                         :class="{ 'rotate-180': open }"
                                         icon="lineicons:chevron-up"
                                         width="25"
                                         height="24"
                                     ></iconify-icon>
-                                </button>
+                                <span class="sidebar-tooltip" aria-hidden="true">izin keluar</span></button>
                                 {{-- sub menu izin keluar --}}
                                 <ul
                                     x-show="open"
                                     x-transition
-                                    class="ml-4 mt-2 flex flex-col gap-2"
+                                    class="sidebar-submenu ml-4 mt-2 flex flex-col gap-2"
                                     style="display: none;"
-                                >   
+                                >
                                     {{-- menu laporam izin keluar --}}
                                     @if($canAccessRoute('laporan-izin-keluar'))
                                         <li>
@@ -163,35 +178,32 @@
                                 </ul>
                             </li>
                             {{-- izin telat --}}
-                            <li x-data="{open: $persist({{ request()->routeIs('cetak-izin-telat') ? 'true' : 'false' }}).using(sessionStorage).as('sidebar-izin-telat')}" >
-                                <button
+                            <li class="sidebar-group-wrap relative" x-data="{open: $persist({{ request()->routeIs('cetak-izin-telat') ? 'true' : 'false' }}).using(sessionStorage).as('sidebar-izin-telat')}" >
+                                <button x-bind:aria-expanded="open.toString()" aria-haspopup="true"
                                     @click="open = !open"
-                                    class="flex w-full items-center justify-between rounded-lg px-4 py-2 text-white hover:bg-blue-deep-solid"
+                                    class="sidebar-group-btn relative flex w-full items-center justify-between rounded-lg px-4 py-2 text-white hover:bg-blue-deep-solid"
                                 >
-                                    <span class="flex items-center gap-2 capitalize">
+                                    <span class="flex items-center gap-2 capitalize min-w-0">
                                         <iconify-icon
                                             :icon="open ? 'mdi:folder-alert' : 'mdi:folder-alert-outline'"
                                             width="24"
                                             height="24"
-                                        ></iconify-icon>
-    
-                                        izin telat
-                                    </span>
+                                        ></iconify-icon><span class="sidebar-label">izin telat</span></span>
                                     <iconify-icon
-                                        class="transition-transform"
+                                        class="sidebar-chevron shrink-0 transition-transform"
                                         :class="{ 'rotate-180': open }"
                                         icon="lineicons:chevron-up"
                                         width="25"
                                         height="24"
                                     ></iconify-icon>
-                                </button>
+                                <span class="sidebar-tooltip" aria-hidden="true">izin telat</span></button>
                                 {{-- sub menu izin telat --}}
                                 <ul
                                     x-show="open"
                                     x-transition
-                                    class="ml-4 mt-2 flex flex-col gap-2"
+                                    class="sidebar-submenu ml-4 mt-2 flex flex-col gap-2"
                                     style="display: none;"
-                                >   
+                                >
                                     {{-- menu cetak izin tekat --}}
                                     @if($canAccessRoute('cetak-izin-telat'))
                                         <li>
@@ -199,7 +211,7 @@
                                                 cetak izin telat
                                             </x-nav-link>
                                         </li>
-                                    @endif                                    
+                                    @endif
                                 </ul>
                             </li>
                         </ul>
@@ -208,34 +220,31 @@
 
                     <!-- rekap absen -->
                     @if($canAccessPrefix('/rekap'))
-                    <li x-data="{open: $persist({{ request()->routeIs('rekap-absen-*') ? 'true' : 'false' }}).using(sessionStorage).as('sidebar-rekap-absen')}">
-                        <button
+                    <li class="sidebar-group-wrap relative" x-data="{open: $persist({{ request()->routeIs('rekap-absen-*') ? 'true' : 'false' }}).using(sessionStorage).as('sidebar-rekap-absen')}">
+                        <button x-bind:aria-expanded="open.toString()" aria-haspopup="true"
                             @click="open = !open"
-                            class="flex w-full items-center justify-between rounded-lg px-4 py-2 text-white hover:bg-blue-deep-solid"
+                            class="sidebar-group-btn relative flex w-full items-center justify-between rounded-lg px-4 py-2 text-white hover:bg-blue-deep-solid"
                         >
-                            <span class="flex items-center gap-2 capitalize">
+                            <span class="flex items-center gap-2 capitalize min-w-0">
                                 <iconify-icon
                                     :icon="open ? 'mdi:folder-check' : 'mdi:folder-check-outline'"
                                     width="24"
                                     height="24"
-                                ></iconify-icon>
-
-                                rekap absen
-                            </span>
+                                ></iconify-icon><span class="sidebar-label">rekap absen</span></span>
 
                             <iconify-icon
-                                class="transition-transform"
+                                class="sidebar-chevron shrink-0 transition-transform"
                                 :class="{ 'rotate-180': open }"
                                 icon="lineicons:chevron-up"
                                 width="25"
                                 height="24"
                             ></iconify-icon>
-                        </button>
+                        <span class="sidebar-tooltip" aria-hidden="true">rekap absen</span></button>
 
                         <ul
                             x-show="open"
                             x-transition
-                            class="ml-4 mt-2 flex flex-col gap-2"
+                            class="sidebar-submenu ml-4 mt-2 flex flex-col gap-2"
                             style="display: none;"
                         >
                             @if($canAccessRoute('rekap-absen-murid'))
@@ -259,34 +268,31 @@
 
                     <!-- riwayat -->
                     @if($canAccessPrefix('/riwayat'))
-                    <li x-data="{open: $persist({{ request()->routeIs('riwayat-absen-*') ? 'true' : 'false' }}).using(sessionStorage).as('sidebar-riwayat-absen')}">
-                        <button
+                    <li class="sidebar-group-wrap relative" x-data="{open: $persist({{ request()->routeIs('riwayat-absen-*') ? 'true' : 'false' }}).using(sessionStorage).as('sidebar-riwayat-absen')}">
+                        <button x-bind:aria-expanded="open.toString()" aria-haspopup="true"
                             @click="open = !open"
-                            class="flex w-full items-center justify-between rounded-lg px-4 py-2 text-white hover:bg-blue-deep-solid"
+                            class="sidebar-group-btn relative flex w-full items-center justify-between rounded-lg px-4 py-2 text-white hover:bg-blue-deep-solid"
                         >
-                            <span class="flex items-center gap-2 capitalize">
+                            <span class="flex items-center gap-2 capitalize min-w-0">
                                 <iconify-icon
                                     :icon="open ? 'mdi:folder-clock' : 'mdi:folder-clock-outline'"
                                     width="24"
                                     height="24"
-                                ></iconify-icon>
-
-                                riwayat absen
-                            </span>
+                                ></iconify-icon><span class="sidebar-label">riwayat absen</span></span>
 
                             <iconify-icon
-                                class="transition-transform"
+                                class="sidebar-chevron shrink-0 transition-transform"
                                 :class="{ 'rotate-180': open }"
                                 icon="lineicons:chevron-up"
                                 width="25"
                                 height="24"
                             ></iconify-icon>
-                        </button>
+                        <span class="sidebar-tooltip" aria-hidden="true">riwayat absen</span></button>
 
                         <ul
                             x-show="open"
                             x-transition
-                            class="ml-4 mt-2 flex flex-col gap-2"
+                            class="sidebar-submenu ml-4 mt-2 flex flex-col gap-2"
                             style="display: none;"
                         >
                             @if($canAccessRoute('riwayat-absen-murid'))
@@ -305,34 +311,31 @@
 
             <!-- absensi -->
             @if($canAccessGroup('Absensi'))
-            <li x-data="{open: $persist({{ request()->routeIs('absensi-*') ? 'true' : 'false' }}).using(sessionStorage).as('sidebar-absensi')}">
-                <button
+            <li class="sidebar-group-wrap relative" x-data="{open: $persist({{ request()->routeIs('absensi-*') ? 'true' : 'false' }}).using(sessionStorage).as('sidebar-absensi')}">
+                <button x-bind:aria-expanded="open.toString()" aria-haspopup="true"
                     @click="open = !open"
-                    class="flex w-full items-center justify-between rounded-lg px-4 py-2 text-white hover:bg-blue-deep-solid"
+                    class="sidebar-group-btn relative flex w-full items-center justify-between rounded-lg px-4 py-2 text-white hover:bg-blue-deep-solid"
                 >
-                    <span class="flex items-center gap-2 capitalize">
+                    <span class="flex items-center gap-2 capitalize min-w-0">
                         <iconify-icon
                             :icon="open ? 'mdi:folder-edit' : 'mdi:folder-edit-outline'"
                             width="24"
                             height="24"
-                        ></iconify-icon>
-
-                        absensi
-                    </span>
+                        ></iconify-icon><span class="sidebar-label">absensi</span></span>
 
                     <iconify-icon
-                        class="transition-transform"
+                        class="sidebar-chevron shrink-0 transition-transform"
                         :class="{ 'rotate-180': open }"
                         icon="lineicons:chevron-up"
                         width="25"
                         height="24"
                     ></iconify-icon>
-                </button>
+                <span class="sidebar-tooltip" aria-hidden="true">absensi</span></button>
 
                 <ul
                     x-show="open"
                     x-transition
-                    class="ml-4 mt-2 flex flex-col gap-2"
+                    class="sidebar-submenu ml-4 mt-2 flex flex-col gap-2"
                     style="display: none;"
                 >
                     @if($canAccessRoute('absensi-murid'))
@@ -356,34 +359,31 @@
 
             <!-- data -->
             @if($canAccessGroup('Data Master'))
-            <li x-data="{open: $persist({{ request()->routeIs('data-*') ? 'true' : 'false' }}).using(sessionStorage).as('sidebar-data-master')}">
-                <button
+            <li class="sidebar-group-wrap relative" x-data="{open: $persist({{ request()->routeIs('data-*') ? 'true' : 'false' }}).using(sessionStorage).as('sidebar-data-master')}">
+                <button x-bind:aria-expanded="open.toString()" aria-haspopup="true"
                     @click="open = !open"
-                    class="flex w-full items-center justify-between rounded-lg px-4 py-2 text-white hover:bg-blue-deep-solid"
+                    class="sidebar-group-btn relative flex w-full items-center justify-between rounded-lg px-4 py-2 text-white hover:bg-blue-deep-solid"
                 >
-                    <span class="flex items-center gap-2 capitalize">
+                    <span class="flex items-center gap-2 capitalize min-w-0">
                         <iconify-icon
                             :icon="open ? 'mdi:folder-account' : 'mdi:folder-account-outline'"
                             width="24"
                             height="24"
-                        ></iconify-icon>
-
-                        data master
-                    </span>
+                        ></iconify-icon><span class="sidebar-label">data master</span></span>
 
                     <iconify-icon
-                        class="transition-transform"
+                        class="sidebar-chevron shrink-0 transition-transform"
                         :class="{ 'rotate-180': open }"
                         icon="lineicons:chevron-up"
                         width="25"
                         height="24"
                     ></iconify-icon>
-                </button>
+                <span class="sidebar-tooltip" aria-hidden="true">data master</span></button>
 
                 <ul
                     x-show="open"
                     x-transition
-                    class="ml-4 mt-2 flex flex-col gap-2"
+                    class="sidebar-submenu ml-4 mt-2 flex flex-col gap-2"
                     style="display: none;"
                 >
                     @if($canAccessRoute('data-murid'))
@@ -423,34 +423,31 @@
 
             <!-- manajemen -->
             @if($canAccessGroup('Manajemen'))
-            <li x-data="{open: $persist({{ request()->routeIs(['manajemen-waktu', 'manajemen-foto-murid', 'generate-QR', 'manajemen-user', 'manajemen-tahun-ajaran', 'manajemen-role']) ? 'true' : 'false' }}).using(sessionStorage).as('sidebar-manajemen')}">
-                <button
+            <li class="sidebar-group-wrap relative" x-data="{open: $persist({{ request()->routeIs(['manajemen-waktu', 'manajemen-foto-murid', 'generate-QR', 'manajemen-user', 'manajemen-tahun-ajaran', 'manajemen-role']) ? 'true' : 'false' }}).using(sessionStorage).as('sidebar-manajemen')}">
+                <button x-bind:aria-expanded="open.toString()" aria-haspopup="true"
                     @click="open = !open"
-                    class="flex w-full items-center justify-between rounded-lg px-4 py-2 text-white hover:bg-blue-deep-solid"
+                    class="sidebar-group-btn relative flex w-full items-center justify-between rounded-lg px-4 py-2 text-white hover:bg-blue-deep-solid"
                 >
-                    <span class="flex items-center gap-2 capitalize">
+                    <span class="flex items-center gap-2 capitalize min-w-0">
                         <iconify-icon
                             :icon="open ? 'mdi:folder-cog' : 'mdi:folder-cog-outline'"
                             width="24"
                             height="24"
-                        ></iconify-icon>
-
-                        manajemen
-                    </span>
+                        ></iconify-icon><span class="sidebar-label">manajemen</span></span>
 
                     <iconify-icon
-                        class="transition-transform"
+                        class="sidebar-chevron shrink-0 transition-transform"
                         :class="{ 'rotate-180': open }"
                         icon="lineicons:chevron-up"
                         width="25"
                         height="24"
                     ></iconify-icon>
-                </button>
+                <span class="sidebar-tooltip" aria-hidden="true">manajemen</span></button>
 
                 <ul
                     x-show="open"
                     x-transition
-                    class="ml-4 mt-2 flex flex-col gap-2"
+                    class="sidebar-submenu ml-4 mt-2 flex flex-col gap-2"
                     style="display: none;"
                 >
                     @if($canAccessRoute('manajemen-waktu'))
@@ -521,7 +518,7 @@
         </ul>
 
         <!-- footer -->
-        <div class="fixed bottom-0 bg-[#03152E] w-full max-w-75 shrink-0 border-t border-white/10 py-2">
+        <div class="sidebar-footer absolute bottom-0 inset-x-0 bg-[#03152E] shrink-0 border-t border-white/10 py-2">
             <a href="{{ route('profil') }}" wire:navigate>
                 <div class="flex md:hidden items-center gap-2 p-2 px-5">
                     <div class="cursor-pointer w-8 h-8 rounded-full bg-white shadow-sm overflow-hidden flex items-center justify-center">
@@ -553,7 +550,7 @@
                 </div>
             </a>
 
-            <p class="mt-4 text-center text-[8px] uppercase text-white">
+            <p class="sidebar-footer-text mt-4 text-center text-[8px] uppercase text-white">
                 {{ $siteCopyright }}
             </p>
         </div>
