@@ -343,6 +343,25 @@
     transform: rotate(90deg) scale(1.05);
 }
 
+/* Scan QR page: sweeping laser line inside the viewfinder. translate-based
+   (compositor-friendly); static centered pulse when reduced motion is on. */
+.scan-line {
+    animation: scan-line-sweep 2.4s cubic-bezier(0.4, 0, 0.2, 1) infinite
+        alternate;
+    will-change: translate;
+}
+
+@keyframes scan-line-sweep {
+    from {
+        translate: 0 -12vh;
+        opacity: 0.55;
+    }
+    to {
+        translate: 0 12vh;
+        opacity: 1;
+    }
+}
+
 @media (prefers-reduced-motion: reduce) {
     #app-sidebar {
         transition: none;
@@ -356,7 +375,12 @@
     .navbar-toggle-icon,
     .sidebar-submenu-enter,
     .sidebar-submenu-leave,
-    .sidebar-chevron {
+    .sidebar-chevron,
+    .scan-line {
         transition: none;
+    }
+
+    .scan-line {
+        animation: none;
     }
 }
