@@ -1,8 +1,7 @@
 <div class="space-y-6">
 
     <!-- HEADER -->
-    <div
-        class="relative overflow-hidden rounded-3xl bg-gradient-to-r from-blue-main to-blue-deep p-6 shadow-sm">
+    <div class="relative overflow-hidden rounded-3xl bg-gradient-to-r from-blue-main to-blue-deep p-6 shadow-sm">
 
         <!-- ornament -->
         <div class="absolute -top-10 -right-10 h-40 w-40 rounded-full bg-white/10"></div>
@@ -16,10 +15,7 @@
                 <div
                     class="hidden md:flex h-16 w-16 items-center justify-center rounded-2xl bg-white/15 backdrop-blur text-white">
 
-                    <iconify-icon
-                        icon="solar:users-group-rounded-bold"
-                        width="34"
-                        height="34">
+                    <iconify-icon icon="solar:users-group-rounded-bold" width="34" height="34">
                     </iconify-icon>
 
                 </div>
@@ -46,10 +42,7 @@
 
                         <div class="flex items-center justify-center gap-2">
 
-                            <iconify-icon
-                                class="transition group-hover:rotate-90"
-                                icon="line-md:plus"
-                                width="22"
+                            <iconify-icon class="transition group-hover:rotate-90" icon="line-md:plus" width="22"
                                 height="22">
                             </iconify-icon>
 
@@ -74,12 +67,8 @@
             <div class="grid grid-cols-1 gap-4 lg:grid-cols-4">
 
                 <!-- ROLE -->
-                <livewire:components.searchable-select
-                    wire:model.live="roleId"
-                    :options="$roles"
-                    value-key="id" label-key="name"
-                    label="Role" placeholder="Cari role..."
-                    all-label="Semua role"
+                <livewire:components.searchable-select wire:model.live="roleId" :options="$roles" value-key="id"
+                    label-key="name" label="Role" placeholder="Cari role..." all-label="Semua role"
                     not-found-text="Pilihan tidak ditemukan." />
 
                 <!-- search -->
@@ -91,20 +80,13 @@
 
                     <div class="relative">
 
-                        <input
-                            type="search"
-                            name="search"
-                            wire:model.live.debounce.500ms="search"
+                        <input type="search" name="search" wire:model.live.debounce.500ms="search"
                             placeholder="Cari nama user..."
                             class="w-full rounded-2xl border border-gray-300 bg-gray-50 py-3 pl-4 pr-12 text-sm transition placeholder:text-gray-400 hover:border-blue-main focus:border-blue-main focus:outline-none focus:ring-4 focus:ring-blue-100" />
 
-                        <div
-                            class="absolute inset-y-0 right-4 flex items-center text-gray-400">
+                        <div class="absolute inset-y-0 right-4 flex items-center text-gray-400">
 
-                            <iconify-icon
-                                icon="mdi:account-search-outline"
-                                width="22"
-                                height="22">
+                            <iconify-icon icon="mdi:account-search-outline" width="22" height="22">
                             </iconify-icon>
 
                         </div>
@@ -117,13 +99,15 @@
 
         </div>
 
-        <!-- table -->
-        <div class="overflow-x-auto">
+        {{-- DESKTOP TABLE --}}
+        <div class="hidden overflow-x-auto lg:block">
 
             <table class="w-full text-sm">
 
                 <thead class="bg-gray-100 text-gray-700">
+
                     <tr>
+
                         <th class="px-6 py-4 text-center font-semibold">
                             No
                         </th>
@@ -147,23 +131,31 @@
                         <th class="px-6 py-4 text-center font-semibold">
                             Aksi
                         </th>
+
                     </tr>
+
                 </thead>
 
                 <tbody>
-                    @foreach ($users as $user)
+
+                    @forelse ($users as $user)
 
                         @php
+
                             $statusValue = strtolower((string) $user->is_active === '1' ? 'aktif' : 'nonaktif');
 
                             $statusClass = match ($statusValue) {
                                 'nonaktif' => 'bg-rose-100 text-rose-600',
+
                                 default => 'bg-green-100 text-green-600',
                             };
 
                             $isSuperAdmin = $user->isSuperAdmin();
+
                             $toggleLabel = $user->is_active ? 'Nonaktifkan user' : 'Aktifkan user';
+
                             $toggleIcon = $user->is_active ? 'lineicons:ban-2' : 'lineicons:checkmark';
+
                             $toggleClass = $user->is_active
                                 ? 'bg-rose-500 hover:bg-rose-600'
                                 : 'bg-emerald-500 hover:bg-emerald-600';
@@ -171,12 +163,14 @@
 
                         <tr class="border-t border-gray-100 transition hover:bg-gray-50">
 
-                            <!-- no -->
+                            {{-- no --}}
                             <td class="px-6 py-5 text-center font-medium text-gray-700">
+
                                 {{ $loop->iteration }}
+
                             </td>
 
-                            <!-- user -->
+                            {{-- user --}}
                             <td class="px-6 py-5">
 
                                 <div class="flex items-center gap-3">
@@ -189,6 +183,7 @@
                                     </div>
 
                                     <div>
+
                                         <h1 class="font-semibold capitalize text-gray-800">
                                             {{ $user->name }}
                                         </h1>
@@ -196,31 +191,37 @@
                                         <p class="text-xs text-gray-400">
                                             User account
                                         </p>
+
                                     </div>
 
                                 </div>
 
                             </td>
 
-                            <!-- email -->
+                            {{-- email --}}
                             <td class="px-6 py-5 text-gray-600">
                                 {{ $user->email }}
                             </td>
 
-                            <!-- role -->
+                            {{-- role --}}
                             <td class="px-6 py-5 text-center">
 
                                 <div class="flex flex-wrap justify-center gap-1">
+
                                     @foreach ($user->assignedRoles() as $role)
-                                        <span class="inline-flex rounded-full bg-blue-100 px-3 py-1 text-xs font-semibold capitalize text-blue-600">
+                                        <span
+                                            class="inline-flex rounded-full bg-blue-100 px-3 py-1 text-xs font-semibold capitalize text-blue-600">
+
                                             {{ $role->name }}
+
                                         </span>
                                     @endforeach
+
                                 </div>
 
                             </td>
 
-                            <!-- status -->
+                            {{-- status --}}
                             <td class="px-6 py-5 text-center">
 
                                 <div class="flex items-center justify-center">
@@ -238,83 +239,343 @@
 
                             </td>
 
-                            <!-- aksi -->
+                            {{-- aksi --}}
                             <td class="px-6 py-5">
 
                                 <div class="flex items-center justify-center gap-2">
 
-                                    <!-- ban -->
-                                    <button
-                                        type="button"
+                                    {{-- toggle status --}}
+                                    <button type="button"
                                         title="{{ $isSuperAdmin ? 'Super-admin tidak bisa dinonaktifkan' : $toggleLabel }}"
-                                        @disabled($isSuperAdmin)
-                                        onclick="return confirm('Ubah status user ini?')"
+                                        @disabled($isSuperAdmin) onclick="return confirm('Ubah status user ini?')"
                                         wire:click="toggleStatus({{ $user->id }})"
                                         class="flex h-10 w-10 items-center justify-center rounded-2xl text-white shadow-sm transition hover:-translate-y-0.5 disabled:cursor-not-allowed disabled:opacity-60 {{ $toggleClass }}">
 
-                                        <iconify-icon
-                                            icon="{{ $toggleIcon }}"
-                                            width="20"
-                                            height="20">
+                                        <iconify-icon icon="{{ $toggleIcon }}" width="20" height="20">
                                         </iconify-icon>
 
                                     </button>
 
-                                    <!-- edit -->
+                                    {{-- edit --}}
                                     <a href="{{ route('edit-user', ['userId' => $user->id]) }}" wire:navigate>
 
                                         <button
                                             class="flex h-10 w-10 items-center justify-center rounded-2xl bg-amber-400 text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-amber-500">
 
-                                            <iconify-icon
-                                                icon="lineicons:pencil-1"
-                                                width="20"
-                                                height="20">
+                                            <iconify-icon icon="lineicons:pencil-1" width="20" height="20">
                                             </iconify-icon>
 
                                         </button>
 
                                     </a>
 
-                                    <!-- delete -->
-                                    <div">
-                                        <button
-                                            @disabled($isSuperAdmin)
-                                            @click="$dispatch('open-delete-user', { id: {{ $user->id }} })"
-                                            class="flex h-10 w-10 items-center justify-center rounded-2xl bg-rose-500 text-white shadow-sm transition disabled:cursor-not-allowed disabled:opacity-60 hover:-translate-y-0.5 hover:bg-rose-600">
+                                    {{-- delete --}}
+                                    <button @disabled($isSuperAdmin)
+                                        @click="$dispatch('open-delete-user', { id: {{ $user->id }} })"
+                                        class="flex h-10 w-10 items-center justify-center rounded-2xl bg-rose-500 text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-rose-600 disabled:cursor-not-allowed disabled:opacity-60 hover:-translate-y-0.5 hover:bg-rose-600">
 
-                                            <iconify-icon
-                                                icon="lineicons:trash-3"
-                                                width="20"
-                                                height="20">
-                                            </iconify-icon>
+                                        <iconify-icon icon="lineicons:trash-3" width="20" height="20">
+                                        </iconify-icon>
 
-                                        </button>
+                                    </button>
 
-                                        
-                                    </div>
-                                    
                                 </div>
 
                             </td>
 
                         </tr>
 
-                    @endforeach
-                </tbody>
+                    @empty
+
+                        <x-empty-state icon="mdi:account-cog-outline" title="Data user kosong"
+                            description="Belum ada data user yang tersedia." :colspan="6">
+                            <a href="{{ route('tambah-user') }}" wire:navigate>
+                                <button
+                                    class="group flex items-center justify-center gap-2 rounded-2xl bg-blue-main px-5 py-3 text-sm font-semibold text-white shadow-lg transition hover:-translate-y-0.5 hover:bg-blue-deep hover:shadow-xl active:scale-95">
+                                    <iconify-icon icon="line-md:plus" width="22" height="22"
+                                        class="transition duration-300 group-hover:rotate-90">
+                                    </iconify-icon>
+                                    Tambah User
+                                </button>
+                            </a>
+                        </x-empty-state>
+
+                    @endforelse
 
             </table>
 
         </div>
-        
-        <div
-            class="border-t border-gray-200 bg-gray-50 px-6 py-4">
-            
+
+        {{-- MOBILE + TABLET COLLAPSIBLE --}}
+        <div class="space-y-3 lg:hidden">
+
+            @forelse ($users as $user)
+
+                @php
+
+                    $statusValue = strtolower((string) $user->is_active === '1' ? 'aktif' : 'nonaktif');
+
+                    $statusClass = match ($statusValue) {
+                        'nonaktif' => 'bg-rose-100 text-rose-600',
+
+                        default => 'bg-green-100 text-green-600',
+                    };
+
+                    $isSuperAdmin = $user->isSuperAdmin();
+
+                    $toggleLabel = $user->is_active ? 'Nonaktifkan user' : 'Aktifkan user';
+
+                    $toggleIcon = $user->is_active ? 'lineicons:ban-2' : 'lineicons:checkmark';
+
+                    $toggleClass = $user->is_active
+                        ? 'bg-rose-500 hover:bg-rose-600'
+                        : 'bg-emerald-500 hover:bg-emerald-600';
+                @endphp
+
+                <div x-data="{ open: false }" class="overflow-hidden border border-t-0 border-gray-200 bg-white">
+
+                    {{-- SUMMARY --}}
+                    <div class="flex items-center gap-3 p-4">
+
+                        {{-- no --}}
+                        <div
+                            class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-gray-100 text-sm font-semibold text-gray-600">
+
+                            {{ $loop->iteration }}
+
+                        </div>
+
+                        {{-- avatar --}}
+                        <div
+                            class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-blue-100 font-bold uppercase text-blue-main">
+
+                            {{ substr($user->name, 0, 1) }}
+
+                        </div>
+
+                        {{-- user information --}}
+                        <div class="min-w-0 flex-1">
+
+                            <h2 class="truncate font-semibold capitalize text-gray-800">
+                                {{ $user->name }}
+                            </h2>
+
+                            <p class="mt-1 truncate text-xs text-gray-400">
+                                {{ $user->email }}
+                            </p>
+
+                            <div class="mt-2 flex flex-wrap items-center gap-2">
+
+                                {{-- role --}}
+                                @foreach ($user->assignedRoles() as $role)
+                                    <span
+                                        class="inline-flex rounded-full bg-blue-100 px-3 py-1 text-[11px] font-semibold capitalize text-blue-600">
+
+                                        {{ $role->name }}
+
+                                    </span>
+                                @endforeach
+
+                                {{-- status --}}
+                                <span
+                                    class="{{ $statusClass }} inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-[11px] font-semibold capitalize">
+
+                                    <span class="h-1.5 w-1.5 rounded-full bg-current"></span>
+
+                                    {{ $statusValue }}
+
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                        {{-- expand --}}
+                        <button type="button" @click="open = !open"
+                            class="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl text-gray-500 transition hover:bg-gray-100 hover:text-gray-700"
+                            :aria-expanded="open">
+
+                            <iconify-icon icon="lineicons:chevron-down" width="20" height="20"
+                                class="transition-transform duration-200" :class="{ 'rotate-180': open }">
+                            </iconify-icon>
+
+                        </button>
+
+                    </div>
+
+                    {{-- COLLAPSED DETAIL --}}
+                    <div x-show="open" x-collapse class="border-t border-gray-200 bg-gray-50">
+
+                        <div class="grid gap-5 p-5 grid-cols-2">
+
+                            {{-- no --}}
+                            <div>
+
+                                <p class="text-xs font-medium text-gray-400">
+                                    No
+                                </p>
+
+                                <p class="mt-1 text-sm font-semibold text-gray-700">
+                                    {{ $loop->iteration }}
+                                </p>
+
+                            </div>
+
+                            {{-- username --}}
+                            <div>
+
+                                <p class="text-xs font-medium text-gray-400">
+                                    Username
+                                </p>
+
+                                <p class="mt-1 text-sm font-semibold capitalize text-gray-700">
+                                    {{ $user->name }}
+                                </p>
+
+                            </div>
+
+                            {{-- email --}}
+                            <div class="sm:col-span-2">
+
+                                <p class="text-xs font-medium text-gray-400">
+                                    Email
+                                </p>
+
+                                <p class="mt-1 break-all text-sm font-semibold text-gray-700">
+                                    {{ $user->email }}
+                                </p>
+
+                            </div>
+
+                            {{-- role --}}
+                            <div class="sm:col-span-2">
+
+                                <p class="text-xs font-medium text-gray-400">
+                                    Role
+                                </p>
+
+                                <div class="mt-2 flex flex-wrap gap-2">
+
+                                    @foreach ($user->assignedRoles() as $role)
+                                        <span
+                                            class="inline-flex rounded-full bg-blue-100 px-3 py-1 text-xs font-semibold capitalize text-blue-600">
+
+                                            {{ $role->name }}
+
+                                        </span>
+                                    @endforeach
+
+                                </div>
+
+                            </div>
+
+                            {{-- status --}}
+                            <div>
+
+                                <p class="text-xs font-medium text-gray-400">
+                                    Status
+                                </p>
+
+                                <div class="mt-2">
+
+                                    <span
+                                        class="{{ $statusClass }} inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-xs font-semibold capitalize">
+
+                                        <span class="h-2 w-2 rounded-full bg-current"></span>
+
+                                        {{ $statusValue }}
+
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+                            {{-- account type --}}
+                            @if ($isSuperAdmin)
+                                <div>
+
+                                    <p class="text-xs font-medium text-gray-400">
+                                        Akses
+                                    </p>
+
+                                    <p class="mt-1 text-sm font-semibold text-gray-700">
+                                        Super Admin
+                                    </p>
+
+                                </div>
+                            @endif
+
+                        </div>
+
+                        {{-- ACTIONS --}}
+                        <div class="flex items-center gap-2 border-t border-gray-200 p-4">
+
+                            {{-- toggle status --}}
+                            <button type="button"
+                                title="{{ $isSuperAdmin ? 'Super-admin tidak bisa dinonaktifkan' : $toggleLabel }}"
+                                @disabled($isSuperAdmin) onclick="return confirm('Ubah status user ini?')"
+                                wire:click="toggleStatus({{ $user->id }})"
+                                class="flex h-11 flex-1 items-center justify-center gap-2 rounded-xl px-4 text-sm font-semibold text-white shadow-sm transition disabled:cursor-not-allowed disabled:opacity-60 {{ $toggleClass }}">
+
+                                <iconify-icon icon="{{ $toggleIcon }}" width="18" height="18">
+                                </iconify-icon>
+
+                                {{ $user->is_active ? 'Nonaktifkan' : 'Aktifkan' }}
+
+                            </button>
+
+                            {{-- edit --}}
+                            <a href="{{ route('edit-user', ['userId' => $user->id]) }}" wire:navigate
+                                class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-amber-400 text-white transition hover:bg-amber-500">
+
+                                <iconify-icon icon="lineicons:pencil-1" width="20" height="20">
+                                </iconify-icon>
+
+                            </a>
+
+                            {{-- delete --}}
+                            <button type="button" @disabled($isSuperAdmin)
+                                @click="$dispatch('open-delete-user', { id: {{ $user->id }} })"
+                                class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-rose-500 text-white transition hover:bg-rose-600 disabled:cursor-not-allowed disabled:opacity-60">
+
+                                <iconify-icon icon="lineicons:trash-3" width="20" height="20">
+                                </iconify-icon>
+
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            @empty
+
+                <x-empty-state icon="mdi:account-cog-outline" title="Data user kosong"
+                    description="Belum ada data user yang tersedia.">
+                    <a href="{{ route('tambah-user') }}" wire:navigate>
+                        <button
+                            class="group flex items-center justify-center gap-2 rounded-2xl bg-blue-main px-5 py-3 text-sm font-semibold text-white shadow-lg transition hover:-translate-y-0.5 hover:bg-blue-deep hover:shadow-xl active:scale-95">
+                            <iconify-icon icon="line-md:plus" width="22" height="22"
+                                class="transition duration-300 group-hover:rotate-90">
+                            </iconify-icon>
+                            Tambah User
+                        </button>
+                    </a>
+                </x-empty-state>
+
+            @endforelse
+
+        </div>
+
+        <div class="border-t border-gray-200 bg-gray-50 px-6 py-4">
+
             {{ $users->links('livewire.components.pagination') }}
 
         </div>
 
     </div>
-    
-    <livewire:manajemen.user.components.modal.hapus/>
+
+    <livewire:manajemen.user.components.modal.hapus />
 </div>
