@@ -18,10 +18,10 @@
     --color-blue-dark: #021024;
     --color-blue-deep: #052659;
     --color-blue-deep-solid: #105192;
-    --color-blue-main: #5483B3;
-    --color-blue-soft: #7DA0CA;
-    --color-blue-light: #C1E8FF;
-    
+    --color-blue-main: #5483b3;
+    --color-blue-soft: #7da0ca;
+    --color-blue-light: #c1e8ff;
+
     /* calendar color */
     --color-calendar-blue: #3b82f6;
     --color-calendar-purple: #a855f7;
@@ -31,11 +31,12 @@
     --color-calendar-red-light: #fee2e2;
     --color-calendar-yellow-light: #ffd966;
     --color-calendar-mute: #9ca3af;
-
 }
 
 @utility font-heading {
-    font-family: var(--font-heading), var(--font-body), ui-sans-serif, system-ui, sans-serif;
+    font-family:
+        var(--font-heading), var(--font-body), ui-sans-serif, system-ui,
+        sans-serif;
 }
 
 @layer base {
@@ -43,7 +44,6 @@
         font-family: var(--font-body);
     }
 }
-
 
 /* hanya berlaku di dropdown */
 .scroll-hidden::-webkit-scrollbar {
@@ -56,10 +56,9 @@
 }
 
 .scroll-thin::-webkit-scrollbar-thumb {
-    background: #5483B3;
+    background: #5483b3;
     border-radius: 10px;
 }
-
 
 /* untuk calendar ( halaman manajemen waktu ) */
 .calendar-grid {
@@ -73,4 +72,291 @@
 }
 .calendar-cell:nth-child(7n) {
     border-right: none;
+}
+
+/* collapsible sidebar:
+   - mobile (<768px): right drawer, no icon-rail (drawer handles open/close)
+   - tablet/desktop (md+): left sticky sidebar with icon-rail when collapsed
+   NOTE: Tailwind v4 translate-* utilities use the native `translate` property
+   (not `transform`), so the transition must list `translate` explicitly. */
+#app-sidebar {
+    transition:
+        width 220ms cubic-bezier(0.4, 0, 0.2, 1),
+        translate 340ms cubic-bezier(0.32, 0.72, 0, 1),
+        transform 340ms cubic-bezier(0.32, 0.72, 0, 1);
+    will-change: translate;
+}
+
+/* Pre-Alpine state, mobile only: keep the drawer off-canvas before Alpine
+   boots and its :class binding applies `translate-x-full`. Plain `display:none`
+   would skip the first slide-in animation, so park it off-screen with the same
+   property Tailwind v4 uses. Alpine removes `x-cloak` on init, handing control
+   back to the binding. Scoped to mobile so desktop never flashes. */
+@media (max-width: 767px) {
+    #app-sidebar[x-cloak] {
+        translate: 100% 0;
+    }
+}
+
+.sidebar-label {
+    white-space: nowrap;
+    overflow: hidden;
+    transition:
+        opacity 150ms ease-in-out,
+        max-width 220ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Base (expanded) transitions so expand animates as smoothly as collapse. */
+#app-sidebar .sidebar-group-btn,
+#app-sidebar .sidebar-leaf {
+    transition:
+        padding 220ms cubic-bezier(0.4, 0, 0.2, 1),
+        column-gap 220ms cubic-bezier(0.4, 0, 0.2, 1),
+        background-color 150ms ease-in-out;
+}
+
+#app-sidebar > ul {
+    transition: padding 220ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+#app-sidebar .sidebar-header,
+#app-sidebar .sidebar-toggle {
+    transition:
+        padding 220ms cubic-bezier(0.4, 0, 0.2, 1),
+        margin 220ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Submenu expand/collapse: slide + fade instead of the default Alpine snap. */
+.sidebar-submenu {
+    transform-origin: top;
+    overflow: hidden;
+}
+
+.sidebar-submenu-enter {
+    transition:
+        opacity 220ms ease-out,
+        transform 260ms cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+.sidebar-submenu-enter-start {
+    opacity: 0;
+    transform: translateY(-6px) scaleY(0.96);
+}
+
+.sidebar-submenu-enter-end {
+    opacity: 1;
+    transform: translateY(0) scaleY(1);
+}
+
+.sidebar-submenu-leave {
+    transition:
+        opacity 160ms ease-in,
+        transform 180ms ease-in;
+}
+
+.sidebar-submenu-leave-start {
+    opacity: 1;
+    transform: translateY(0) scaleY(1);
+}
+
+.sidebar-submenu-leave-end {
+    opacity: 0;
+    transform: translateY(-6px) scaleY(0.96);
+}
+
+/* Chevron rotate: spring easing so open/close feels connected to the submenu. */
+.sidebar-chevron {
+    transition: transform 260ms cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+.sidebar-tooltip {
+    display: none;
+}
+
+@media (min-width: 768px) {
+    /* Collapsed context = post-Alpine class OR pre-paint html attribute set by the
+   blocking head script. ID specificity wins over the static md:w-72 / lg:w-80
+   utilities. Scoped to md+ so the persisted desktop collapse state never
+   breaks the mobile drawer. */
+    #app-sidebar.sidebar-collapsed,
+    html[data-sidebar-collapsed='true'] #app-sidebar {
+        width: 5rem;
+    }
+
+    #app-sidebar.sidebar-collapsed .sidebar-label,
+    html[data-sidebar-collapsed='true'] #app-sidebar .sidebar-label {
+        opacity: 0;
+        max-width: 0;
+        pointer-events: none;
+        transition:
+            opacity 120ms ease-in,
+            max-width 220ms cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    #app-sidebar.sidebar-collapsed .sidebar-header-text,
+    #app-sidebar.sidebar-collapsed .sidebar-logo,
+    #app-sidebar.sidebar-collapsed .sidebar-chevron,
+    #app-sidebar.sidebar-collapsed .sidebar-submenu,
+    #app-sidebar.sidebar-collapsed .sidebar-footer-text,
+    html[data-sidebar-collapsed='true'] #app-sidebar .sidebar-header-text,
+    html[data-sidebar-collapsed='true'] #app-sidebar .sidebar-logo,
+    html[data-sidebar-collapsed='true'] #app-sidebar .sidebar-chevron,
+    html[data-sidebar-collapsed='true'] #app-sidebar .sidebar-submenu,
+    html[data-sidebar-collapsed='true'] #app-sidebar .sidebar-footer-text {
+        display: none;
+    }
+
+    #app-sidebar.sidebar-collapsed .sidebar-group-btn,
+    #app-sidebar.sidebar-collapsed .sidebar-leaf,
+    html[data-sidebar-collapsed='true'] #app-sidebar .sidebar-group-btn,
+    html[data-sidebar-collapsed='true'] #app-sidebar .sidebar-leaf {
+        justify-content: center;
+        padding-left: 0.5rem;
+        padding-right: 0.5rem;
+        transition:
+            padding 220ms cubic-bezier(0.4, 0, 0.2, 1),
+            column-gap 220ms cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* Center the icon inside the pill: the collapsed label keeps its flex
+       `gap-2` slot even at max-width 0, pushing the icon half a gap left and
+       leaving the right side of the active pill visually wider. */
+    #app-sidebar.sidebar-collapsed .sidebar-group-btn,
+    #app-sidebar.sidebar-collapsed .sidebar-group-btn > span,
+    #app-sidebar.sidebar-collapsed .sidebar-leaf,
+    html[data-sidebar-collapsed='true'] #app-sidebar .sidebar-group-btn,
+    html[data-sidebar-collapsed='true'] #app-sidebar .sidebar-group-btn > span,
+    html[data-sidebar-collapsed='true'] #app-sidebar .sidebar-leaf {
+        column-gap: 0;
+    }
+
+    /* Symmetric rail gutters: the menu <ul> only pads right (md:pr-2) while
+       leaves add mx-2, so pills sit 12px off the left rail edge but 20px off
+       the right. Equal padding on both sides centers them in the 5rem rail. */
+    #app-sidebar.sidebar-collapsed > ul,
+    html[data-sidebar-collapsed='true'] #app-sidebar > ul {
+        padding-left: 0.5rem;
+        padding-right: 0.5rem;
+    }
+
+    #app-sidebar.sidebar-collapsed .sidebar-group-btn iconify-icon,
+    #app-sidebar.sidebar-collapsed .sidebar-leaf iconify-icon,
+    html[data-sidebar-collapsed='true']
+        #app-sidebar
+        .sidebar-group-btn
+        iconify-icon,
+    html[data-sidebar-collapsed='true']
+        #app-sidebar
+        .sidebar-leaf
+        iconify-icon {
+        flex-shrink: 0;
+    }
+
+    #app-sidebar.sidebar-collapsed .sidebar-header,
+    html[data-sidebar-collapsed='true'] #app-sidebar .sidebar-header {
+        justify-content: center;
+        padding-left: 0.5rem;
+        padding-right: 0.5rem;
+    }
+
+    #app-sidebar.sidebar-collapsed .sidebar-toggle,
+    html[data-sidebar-collapsed='true'] #app-sidebar .sidebar-toggle {
+        margin-left: 0;
+        margin-right: 0;
+    }
+
+    /* tooltip only on hover/focus when collapsed */
+    #app-sidebar.sidebar-collapsed .sidebar-tooltip,
+    html[data-sidebar-collapsed='true'] #app-sidebar .sidebar-tooltip {
+        display: block;
+        position: absolute;
+        left: 100%;
+        top: 50%;
+        transform: translateY(-50%) translateX(4px);
+        margin-left: 0.5rem;
+        padding: 0.25rem 0.5rem;
+        border-radius: 0.5rem;
+        font-size: 0.75rem;
+        line-height: 1rem;
+        text-transform: capitalize;
+        white-space: nowrap;
+        color: #fff;
+        background-color: #052659;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 150ms ease-in-out;
+        z-index: 60;
+    }
+
+    #app-sidebar.sidebar-collapsed .group\/nav:hover .sidebar-tooltip,
+    #app-sidebar.sidebar-collapsed .group\/nav:focus-within .sidebar-tooltip,
+    #app-sidebar.sidebar-collapsed .sidebar-group-wrap:hover .sidebar-tooltip,
+    #app-sidebar.sidebar-collapsed
+        .sidebar-group-wrap:focus-within
+        .sidebar-tooltip,
+    html[data-sidebar-collapsed='true']
+        #app-sidebar
+        .group\/nav:hover
+        .sidebar-tooltip,
+    html[data-sidebar-collapsed='true']
+        #app-sidebar
+        .group\/nav:focus-within
+        .sidebar-tooltip,
+    html[data-sidebar-collapsed='true']
+        #app-sidebar
+        .sidebar-group-wrap:hover
+        .sidebar-tooltip,
+    html[data-sidebar-collapsed='true']
+        #app-sidebar
+        .sidebar-group-wrap:focus-within
+        .sidebar-tooltip {
+        opacity: 1;
+    }
+}
+
+/* Lock the scroll container behind the mobile drawer while it is open. */
+@media (max-width: 767px) {
+    body.sidebar-drawer-open main > div {
+        overflow: hidden;
+    }
+}
+
+/* Mobile navbar toggle: rotate + scale when the drawer opens so the
+   hamburger -> xmark swap animates instead of hard-swapping. */
+.navbar-toggle {
+    transition: transform 200ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.navbar-toggle:active {
+    transform: scale(0.9);
+}
+
+.navbar-toggle-icon {
+    display: inline-flex;
+    transition:
+        transform 250ms cubic-bezier(0.32, 0.72, 0, 1),
+        opacity 150ms ease-in-out;
+}
+
+.navbar-toggle-icon.navbar-toggle-open {
+    transform: rotate(90deg) scale(1.05);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    #app-sidebar {
+        transition: none;
+        will-change: auto;
+    }
+
+    .sidebar-label,
+    #app-sidebar.sidebar-collapsed .sidebar-tooltip,
+    html[data-sidebar-collapsed='true'] #app-sidebar .sidebar-tooltip,
+    .navbar-toggle,
+    .navbar-toggle-icon,
+    .sidebar-submenu-enter,
+    .sidebar-submenu-leave,
+    .sidebar-chevron {
+        transition: none;
+    }
 }

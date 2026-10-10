@@ -2,14 +2,10 @@
 
     <!-- BACK BUTTON -->
     <div>
-        <button
-            onclick="history.back()"
+        <button onclick="history.back()"
             class="flex items-center gap-2 rounded-2xl border border-gray-200 bg-white px-5 py-3 text-sm font-medium text-gray-700 shadow-sm transition hover:-translate-y-0.5 hover:border-blue-main hover:text-blue-main hover:shadow-md">
 
-            <iconify-icon
-                icon="solar:arrow-left-linear"
-                width="20"
-                height="20">
+            <iconify-icon icon="solar:arrow-left-linear" width="20" height="20">
             </iconify-icon>
 
             Kembali
@@ -18,8 +14,7 @@
     </div>
 
     <!-- HEADER -->
-    <div
-        class="relative overflow-hidden rounded-3xl bg-gradient-to-r from-blue-main to-blue-deep p-6 shadow-sm">
+    <div class="relative overflow-hidden rounded-3xl bg-gradient-to-r from-blue-main to-blue-deep p-6 shadow-sm">
 
         <!-- ornament -->
         <div class="absolute -right-10 -top-10 h-40 w-40 rounded-full bg-white/10"></div>
@@ -30,7 +25,8 @@
             <!-- profile -->
             <div class="flex items-center gap-4">
 
-                <x-murid-avatar :murid="$murid" class="flex h-16 w-16 items-center justify-center rounded-2xl bg-white/20 text-2xl font-bold text-white backdrop-blur" />
+                <x-murid-avatar :murid="$murid"
+                    class="flex h-16 w-16 items-center justify-center rounded-2xl bg-white/20 text-2xl font-bold text-white backdrop-blur" />
 
                 <div>
                     <h1 class="text-2xl font-semibold capitalize text-white">
@@ -45,8 +41,7 @@
             </div>
 
             <!-- Tanggal -->
-            <div
-                class="w-full md:w-auto rounded-2xl border border-white/20 bg-white/10 px-5 py-3 backdrop-blur">
+            <div class="w-full md:w-auto rounded-2xl border border-white/20 bg-white/10 px-5 py-3 backdrop-blur">
 
                 <p class="text-xs uppercase tracking-widest text-blue-100">
                     Tanggal
@@ -111,7 +106,7 @@
                     Detail kehadiran selama tanggal yang dipilih
                 </p>
             </div>
-            
+
         </div>
 
         <!-- table -->
@@ -141,72 +136,71 @@
 
                 <tbody>
                     @forelse ($listAbsensi as $item)
+                        @php
+                            $statusValue = strtolower((string) $item->status);
 
-                    @php
-                    $statusValue = strtolower((string) $item->status);
+                            $statusClass = match ($statusValue) {
+                                'sakit' => 'text-amber-700 bg-amber-100',
+                                'izin' => 'text-blue-700 bg-blue-100',
+                                'alpa' => 'text-rose-700 bg-rose-100',
+                                'masuk' => 'text-cyan-700 bg-cyan-100',
+                                'hadir' => 'text-emerald-700 bg-emerald-100',
+                                'terlambat' => 'text-orange-700 bg-orange-100',
+                                default => 'text-gray-700 bg-gray-100',
+                            };
+                        @endphp
 
-                    $statusClass = match ($statusValue) {
-                    'sakit' => 'text-amber-700 bg-amber-100',
-                    'izin' => 'text-blue-700 bg-blue-100',
-                    'alpa' => 'text-rose-700 bg-rose-100',
-                    'masuk' => 'text-cyan-700 bg-cyan-100',
-                    'hadir' => 'text-emerald-700 bg-emerald-100',
-                    'terlambat' => 'text-orange-700 bg-orange-100',
-                    default => 'text-gray-700 bg-gray-100',
-                    };
-                    @endphp
+                        <tr class="border-t border-gray-100 transition hover:bg-gray-50">
 
-                    <tr class="border-t border-gray-100 transition hover:bg-gray-50">
+                            <td class="px-6 py-4 text-center font-medium text-gray-700">
+                                {{ $loop->iteration }}
+                            </td>
 
-                        <td class="px-6 py-4 text-center font-medium text-gray-700">
-                            {{ $loop->iteration }}
-                        </td>
+                            <td class="px-6 py-4">
+                                <div class="flex items-center gap-3">
+                                    <x-murid-avatar :murid="$murid"
+                                        class="flex h-12 w-12 items-center justify-center rounded-2xl bg-blue-100 text-sm font-semibold text-blue-main" />
 
-                        <td class="px-6 py-4">
-                            <div class="flex items-center gap-3">
-                                <x-murid-avatar :murid="$murid" class="flex h-12 w-12 items-center justify-center rounded-2xl bg-blue-100 text-sm font-semibold text-blue-main" />
+                                    <div>
+                                        <p class="font-medium capitalize text-gray-800">
+                                            {{ $murid->nama }}
+                                        </p>
 
-                                <div>
-                                    <p class="font-medium capitalize text-gray-800">
-                                        {{ $murid->nama }}
-                                    </p>
-
-                                    <p class="text-xs text-gray-400">
-                                        Siswa aktif
-                                    </p>
+                                        <p class="text-xs text-gray-400">
+                                            Siswa aktif
+                                        </p>
+                                    </div>
                                 </div>
-                            </div>
-                        </td>
+                            </td>
 
-                        <td class="px-6 py-4 text-gray-600 capitalize">
-                            {{ $item->tanggal?->format('d M Y') }}
-                        </td>
+                            <td class="px-6 py-4 text-gray-600 capitalize">
+                                {{ $item->tanggal?->format('d M Y') }}
+                            </td>
 
-                        <td class="px-6 py-4">
+                            <td class="px-6 py-4">
 
-                            <div class="flex items-center justify-center">
+                                <div class="flex items-center justify-center">
 
-                                <div
-                                    class="{{ $statusClass }} flex items-center gap-2 rounded-full px-4 py-1.5 text-xs font-semibold capitalize">
+                                    <div
+                                        class="{{ $statusClass }} flex items-center gap-2 rounded-full px-4 py-1.5 text-xs font-semibold capitalize">
 
-                                    <div class="h-2 w-2 rounded-full bg-current"></div>
+                                        <div class="h-2 w-2 rounded-full bg-current"></div>
 
-                                    {{ $item->status }}
+                                        {{ $item->status }}
+
+                                    </div>
 
                                 </div>
 
-                            </div>
+                            </td>
 
-                        </td>
-
-                    </tr>
+                        </tr>
 
                     @empty
-                        <tr class="border-t border-gray-100">
-                            <td colspan="4" class="px-6 py-8 text-center text-sm text-gray-400">
-                                Tidak ada data absensi pada rentang tanggal ini.
-                            </td>
-                        </tr>
+
+                        <x-empty-state icon="mdi:user-clock-outline" title="Data absensi kosong"
+                            description="Tidak ada data absensi pada rentang tanggal ini."
+                            :colspan="4"></x-empty-state>
                     @endforelse
                 </tbody>
 

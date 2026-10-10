@@ -14,6 +14,9 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
+        // Sidebar state cookie is written raw via document.cookie (Alpine $watch),
+        // so it must be excluded from encryption or request()->cookie() returns null.
+        $middleware->encryptCookies(except: ['sidebar-collapsed']);
         $middleware->web(append: [
             TestTime::class,
         ]);

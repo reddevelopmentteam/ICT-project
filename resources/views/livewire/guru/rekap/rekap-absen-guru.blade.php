@@ -1,8 +1,7 @@
 <div class="space-y-6">
 
     <!-- HERO -->
-    <div
-        class="relative overflow-hidden rounded-3xl bg-gradient-to-r from-blue-main to-blue-deep p-6 shadow-lg">
+    <div class="relative overflow-hidden rounded-3xl bg-gradient-to-r from-blue-main to-blue-deep p-6 shadow-lg">
 
         <div class="absolute -right-16 -top-16 h-60 w-60 rounded-full bg-white/10"></div>
         <div class="absolute bottom-0 left-0 h-40 w-40 rounded-full bg-white/10"></div>
@@ -12,7 +11,8 @@
             <div class="flex items-center gap-5">
                 <div
                     class="hidden md:flex h-16 w-16 items-center justify-center rounded-2xl border border-white/10 bg-white/10 backdrop-blur">
-                    <iconify-icon icon="solar:user-check-bold" width="34" height="34" class="text-white"></iconify-icon>
+                    <iconify-icon icon="solar:user-check-bold" width="34" height="34"
+                        class="text-white"></iconify-icon>
                 </div>
 
                 <div>
@@ -40,14 +40,7 @@
     <!-- STAT CARD -->
     <div class="grid grid-cols-2 gap-5 xl:grid-cols-5">
 
-        @foreach ([
-            ['label' => 'Jumlah Guru', 'value' => '80', 'icon' => 'mdi:account-group', 'class' => 'bg-blue-100 text-blue-main'],
-            ['label' => 'Hadir', 'value' => '65', 'icon' => 'mdi:check-circle', 'class' => 'bg-emerald-100 text-emerald-600'],
-            ['label' => 'Sakit', 'value' => '10', 'icon' => 'mdi:emoticon-sick-outline', 'class' => 'bg-amber-100 text-amber-600'],
-            ['label' => 'Izin', 'value' => '5', 'icon' => 'mdi:file-document-outline', 'class' => 'bg-orange-100 text-orange-500'],
-            ['label' => 'Persentase', 'value' => '85%', 'icon' => 'mdi:chart-donut', 'class' => 'bg-cyan-100 text-cyan-600'],
-        ] as $stat)
-
+        @foreach ([['label' => 'Jumlah Guru', 'value' => '80', 'icon' => 'mdi:account-group', 'class' => 'bg-blue-100 text-blue-main'], ['label' => 'Hadir', 'value' => '65', 'icon' => 'mdi:check-circle', 'class' => 'bg-emerald-100 text-emerald-600'], ['label' => 'Sakit', 'value' => '10', 'icon' => 'mdi:emoticon-sick-outline', 'class' => 'bg-amber-100 text-amber-600'], ['label' => 'Izin', 'value' => '5', 'icon' => 'mdi:file-document-outline', 'class' => 'bg-orange-100 text-orange-500'], ['label' => 'Persentase', 'value' => '85%', 'icon' => 'mdi:chart-donut', 'class' => 'bg-cyan-100 text-cyan-600']] as $stat)
             <div
                 class="group relative overflow-hidden rounded-3xl border border-gray-200 bg-white p-5 shadow-sm transition hover:-translate-y-1 hover:shadow-lg">
 
@@ -72,7 +65,6 @@
                 </div>
 
             </div>
-
         @endforeach
 
     </div>
@@ -103,66 +95,52 @@
                     Tanggal
                 </label>
 
-                <input
-                    type="date"
-                    wire:model.live="filterTanggal"
+                <input type="date" wire:model.live="filterTanggal"
                     class="w-full rounded-2xl border border-gray-300 bg-gray-50 px-4 py-3 text-sm transition hover:border-blue-main focus:border-blue-main focus:outline-none focus:ring-4 focus:ring-blue-100" />
             </div>
 
             <!-- jenis ptk -->
-            <div
-                x-data="{
-                    open: false,
-                    selectedId: null,
-                    selectedLabel: 'Semua jenis PTK',
-
-                    select(id, label) {
-                        this.selectedId = id
-                        this.selectedLabel = label
-                        this.open = false
-                    }
-                }"
-                class="relative">
+            <div x-data="{
+                open: false,
+                selectedId: null,
+                selectedLabel: 'Semua jenis PTK',
+            
+                select(id, label) {
+                    this.selectedId = id
+                    this.selectedLabel = label
+                    this.open = false
+                }
+            }" class="relative">
 
                 <label class="mb-2 block text-sm font-semibold text-gray-700">
                     Jenis PTK
                 </label>
 
-                <div
-                    @click="open = !open"
+                <div @click="open = !open"
                     class="flex cursor-pointer items-center justify-between rounded-2xl border border-gray-300 bg-gray-50 px-4 py-3 text-sm transition hover:border-blue-main hover:bg-white">
 
                     <span x-text="selectedLabel" class="line-clamp-1 text-gray-700"></span>
 
-                    <iconify-icon
-                        icon="lineicons:chevron-up"
-                        width="20"
-                        height="20"
-                        class="text-gray-400 transition-transform"
-                        :class="{ 'rotate-180': open }">
+                    <iconify-icon icon="lineicons:chevron-up" width="20" height="20"
+                        class="text-gray-400 transition-transform" :class="{ 'rotate-180': open }">
                     </iconify-icon>
                 </div>
 
-                <div
-                    x-show="open"
-                    x-transition
-                    @click.outside="open = false"
-                    style="display:none"
+                <div x-show="open" x-transition @click.outside="open = false" style="display:none"
                     class="absolute z-50 mt-2 max-h-44 w-full overflow-y-auto rounded-2xl border border-gray-200 bg-white shadow-xl">
 
-                    <div
-                        @click.prevent="select(null, 'Semua jenis PTK')"
+                    <div @click.prevent="select(null, 'Semua jenis PTK')"
                         class="flex cursor-pointer items-center justify-between px-4 py-3 transition hover:bg-blue-main hover:text-white">
                         <span>Semua jenis PTK</span>
                         <iconify-icon x-show="selectedId === null" icon="lineicons:check" width="18"></iconify-icon>
                     </div>
 
                     @foreach (['Mapel', 'BK'] as $jenis)
-                        <div
-                            @click.prevent="select('{{ $jenis }}', '{{ $jenis }}')"
+                        <div @click.prevent="select('{{ $jenis }}', '{{ $jenis }}')"
                             class="flex cursor-pointer items-center justify-between px-4 py-3 transition hover:bg-blue-main hover:text-white">
                             <span>{{ $jenis }}</span>
-                            <iconify-icon x-show="selectedId === '{{ $jenis }}'" icon="lineicons:check" width="18"></iconify-icon>
+                            <iconify-icon x-show="selectedId === '{{ $jenis }}'" icon="lineicons:check"
+                                width="18"></iconify-icon>
                         </div>
                     @endforeach
 
@@ -175,7 +153,8 @@
     <!-- CHART -->
     <div class="overflow-hidden rounded-3xl border border-gray-200 bg-white shadow-sm">
 
-        <div class="flex flex-col gap-4 border-b border-gray-200 px-6 py-5 lg:flex-row lg:items-center lg:justify-between">
+        <div
+            class="flex flex-col gap-4 border-b border-gray-200 px-6 py-5 lg:flex-row lg:items-center lg:justify-between">
             <div>
                 <h2 class="text-xl font-bold text-gray-800">
                     Statistik Kehadiran
@@ -185,7 +164,8 @@
                 </p>
             </div>
 
-            <div class="flex items-center gap-2 rounded-full bg-emerald-50 px-4 py-2 text-xs font-semibold text-emerald-600">
+            <div
+                class="flex items-center gap-2 rounded-full bg-emerald-50 px-4 py-2 text-xs font-semibold text-emerald-600">
                 <div class="h-2 w-2 rounded-full bg-emerald-500"></div>
                 Hadir
             </div>
@@ -218,59 +198,45 @@
                         Pilih Tanggal
                     </label>
 
-                    <input
-                        type="date"
+                    <input type="date"
                         class="w-full rounded-2xl border border-gray-300 px-4 py-3 text-sm transition hover:border-blue-main focus:border-blue-main focus:outline-none focus:ring-4 focus:ring-blue-100" />
                 </div>
 
-                <div
-                    x-data="{
-                        open: false,
-                        selected: '',
-
-                        select(item) {
-                            this.selected = item
-                            this.open = false
-                        }
-                    }"
-                    class="relative">
+                <div x-data="{
+                    open: false,
+                    selected: '',
+                
+                    select(item) {
+                        this.selected = item
+                        this.open = false
+                    }
+                }" class="relative">
 
                     <label class="mb-2 block text-sm font-semibold text-gray-700">
                         Pilih Jenis PTK
                     </label>
 
-                    <div
-                        @click="open = !open"
+                    <div @click="open = !open"
                         class="flex cursor-pointer items-center justify-between rounded-2xl border border-gray-300 px-4 py-3 text-sm text-gray-700 transition hover:border-blue-main">
 
                         <span x-text="selected ? selected : 'Semua jenis PTK'"></span>
 
-                        <iconify-icon
-                            icon="lineicons:chevron-down"
-                            width="18"
-                            class="text-gray-400 transition"
+                        <iconify-icon icon="lineicons:chevron-down" width="18" class="text-gray-400 transition"
                             :class="{ 'rotate-180': open }">
                         </iconify-icon>
 
                     </div>
 
-                    <div
-                        x-show="open"
-                        x-transition
-                        @click.outside="open = false"
-                        style="display:none"
+                    <div x-show="open" x-transition @click.outside="open = false" style="display:none"
                         class="absolute z-50 mt-2 max-h-52 w-full overflow-y-auto rounded-2xl border border-gray-200 bg-white shadow-xl">
 
                         @foreach (['Semua jenis PTK', 'Mapel', 'BK'] as $jenis)
-                            <div
-                                @click="select('{{ $jenis }}')"
+                            <div @click="select('{{ $jenis }}')"
                                 class="flex cursor-pointer items-center justify-between px-4 py-3 text-sm transition hover:bg-blue-main hover:text-white">
 
                                 <span>{{ $jenis }}</span>
 
-                                <iconify-icon
-                                    x-show="selected === '{{ $jenis }}'"
-                                    icon="lineicons:check"
+                                <iconify-icon x-show="selected === '{{ $jenis }}'" icon="lineicons:check"
                                     width="18">
                                 </iconify-icon>
 
@@ -282,7 +248,8 @@
 
             </div>
 
-            <div class="flex flex-col justify-center rounded-3xl bg-gradient-to-br from-blue-main to-blue-deep p-6 text-white">
+            <div
+                class="flex flex-col justify-center rounded-3xl bg-gradient-to-br from-blue-main to-blue-deep p-6 text-white">
 
                 <h2 class="text-2xl font-bold">
                     Export Cepat
@@ -294,17 +261,20 @@
 
                 <div class="mt-6 grid grid-cols-1 gap-3 sm:grid-cols-3">
 
-                    <button class="flex items-center justify-center gap-2 rounded-2xl bg-white/10 px-4 py-3 text-sm font-semibold backdrop-blur transition hover:bg-white/20">
+                    <button
+                        class="flex items-center justify-center gap-2 rounded-2xl bg-white/10 px-4 py-3 text-sm font-semibold backdrop-blur transition hover:bg-white/20">
                         <iconify-icon icon="mdi:file-word" width="18"></iconify-icon>
                         DOCX
                     </button>
 
-                    <button class="flex items-center justify-center gap-2 rounded-2xl bg-white/10 px-4 py-3 text-sm font-semibold backdrop-blur transition hover:bg-white/20">
+                    <button
+                        class="flex items-center justify-center gap-2 rounded-2xl bg-white/10 px-4 py-3 text-sm font-semibold backdrop-blur transition hover:bg-white/20">
                         <iconify-icon icon="mdi:file-pdf-box" width="18"></iconify-icon>
                         PDF
                     </button>
 
-                    <button class="flex items-center justify-center gap-2 rounded-2xl bg-emerald-500 px-4 py-3 text-sm font-semibold transition hover:bg-emerald-600">
+                    <button
+                        class="flex items-center justify-center gap-2 rounded-2xl bg-emerald-500 px-4 py-3 text-sm font-semibold transition hover:bg-emerald-600">
                         <iconify-icon icon="mdi:file-excel" width="18"></iconify-icon>
                         Excel
                     </button>
@@ -319,7 +289,8 @@
     <!-- TABLE -->
     <div class="overflow-hidden rounded-3xl border border-gray-200 bg-white shadow-sm">
 
-        <div class="flex flex-col gap-4 border-b border-gray-200 px-6 py-5 lg:flex-row lg:items-center lg:justify-between">
+        <div
+            class="flex flex-col gap-4 border-b border-gray-200 px-6 py-5 lg:flex-row lg:items-center lg:justify-between">
 
             <div>
                 <h2 class="text-xl font-bold text-gray-800">
@@ -332,10 +303,7 @@
             </div>
 
             <div class="relative w-full lg:w-80">
-                <input
-                    type="search"
-                    name="search"
-                    wire:model.live.debounce.500ms="search"
+                <input type="search" name="search" wire:model.live.debounce.500ms="search"
                     placeholder="Cari nama guru..."
                     class="w-full rounded-2xl border border-gray-300 bg-gray-50 py-3 pl-4 pr-12 text-sm transition placeholder:text-gray-400 hover:border-blue-main focus:border-blue-main focus:outline-none focus:ring-4 focus:ring-blue-100" />
 
@@ -348,55 +316,44 @@
 
         <div class="border-b border-gray-200 bg-gray-50 px-6 py-4">
 
-            <div
-                x-data="{
-                    open: false,
-                    selectedId: null,
-                    selectedLabel: 'Semua status',
+            <div x-data="{
+                open: false,
+                selectedId: null,
+                selectedLabel: 'Semua status',
+            
+                select(id, label) {
+                    this.selectedId = id
+                    this.selectedLabel = label
+                    this.open = false
+                }
+            }" class="relative w-full md:w-72">
 
-                    select(id, label) {
-                        this.selectedId = id
-                        this.selectedLabel = label
-                        this.open = false
-                    }
-                }"
-                class="relative w-full md:w-72">
-
-                <div
-                    @click="open = !open"
+                <div @click="open = !open"
                     class="flex cursor-pointer items-center justify-between rounded-2xl border border-gray-300 bg-white px-4 py-3 text-sm transition hover:border-blue-main">
 
                     <span x-text="selectedLabel" class="text-gray-700"></span>
 
-                    <iconify-icon
-                        icon="lineicons:chevron-up"
-                        width="20"
-                        height="20"
-                        class="text-gray-400 transition-transform"
-                        :class="{ 'rotate-180': open }">
+                    <iconify-icon icon="lineicons:chevron-up" width="20" height="20"
+                        class="text-gray-400 transition-transform" :class="{ 'rotate-180': open }">
                     </iconify-icon>
                 </div>
 
-                <div
-                    x-show="open"
-                    x-transition
-                    @click.outside="open = false"
-                    style="display:none"
+                <div x-show="open" x-transition @click.outside="open = false" style="display:none"
                     class="absolute z-50 mt-2 w-full overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-xl">
 
-                    <div
-                        @click.prevent="select(null, 'Semua status')"
+                    <div @click.prevent="select(null, 'Semua status')"
                         class="flex cursor-pointer items-center justify-between px-4 py-3 transition hover:bg-blue-main hover:text-white">
                         <span>Semua status</span>
-                        <iconify-icon x-show="selectedId === null" icon="lineicons:check" width="18"></iconify-icon>
+                        <iconify-icon x-show="selectedId === null" icon="lineicons:check"
+                            width="18"></iconify-icon>
                     </div>
 
                     @foreach (['sakit', 'izin', 'alpa'] as $status)
-                        <div
-                            @click.prevent="select('{{ $status }}', '{{ $status }}')"
+                        <div @click.prevent="select('{{ $status }}', '{{ $status }}')"
                             class="flex cursor-pointer items-center justify-between px-4 py-3 capitalize transition hover:bg-blue-main hover:text-white">
                             <span>{{ $status }}</span>
-                            <iconify-icon x-show="selectedId === '{{ $status }}'" icon="lineicons:check" width="18"></iconify-icon>
+                            <iconify-icon x-show="selectedId === '{{ $status }}'" icon="lineicons:check"
+                                width="18"></iconify-icon>
                         </div>
                     @endforeach
 
@@ -420,12 +377,11 @@
                 </thead>
 
                 <tbody>
-                    @foreach ([
+                    @forelse ([
                         ['nama' => 'Budi', 'jenis' => 'Mapel', 'status' => 'Sakit'],
                         ['nama' => 'Andi', 'jenis' => 'BK', 'status' => 'Izin'],
                         ['nama' => 'Anda', 'jenis' => 'Mapel', 'status' => 'Alpa'],
                     ] as $item)
-
                         @php
                             $statusValue = strtolower((string) $item['status']);
 
@@ -468,13 +424,15 @@
                             </td>
 
                             <td class="px-5 py-5 text-center">
-                                <div class="inline-flex rounded-full bg-blue-100 px-4 py-1 text-xs font-semibold text-blue-600">
+                                <div
+                                    class="inline-flex rounded-full bg-blue-100 px-4 py-1 text-xs font-semibold text-blue-600">
                                     {{ $item['jenis'] }}
                                 </div>
                             </td>
 
                             <td class="px-5 py-5 text-center">
-                                <div class="{{ $statusClass }} inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-xs font-semibold capitalize">
+                                <div
+                                    class="{{ $statusClass }} inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-xs font-semibold capitalize">
                                     <div class="h-2 w-2 rounded-full bg-current"></div>
                                     {{ $item['status'] }}
                                 </div>
@@ -482,7 +440,11 @@
 
                         </tr>
 
-                    @endforeach
+                    @empty
+
+                        <x-empty-state icon="mdi:account-file-outline" title="Data rekap guru kosong"
+                            description="Belum ada data rekap guru yang tersedia." :colspan="4"></x-empty-state>
+                    @endforelse
                 </tbody>
 
             </table>

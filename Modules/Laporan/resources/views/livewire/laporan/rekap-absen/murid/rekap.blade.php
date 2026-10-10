@@ -1,15 +1,13 @@
 <div class="space-y-6">
 
     <!-- HERO -->
-    <div
-        class="relative overflow-hidden rounded-3xl bg-gradient-to-r from-blue-main to-blue-deep p-6 shadow-lg">
+    <div class="relative overflow-hidden rounded-3xl bg-gradient-to-r from-blue-main to-blue-deep p-6 shadow-lg">
 
         <!-- glow -->
         <div class="absolute -right-16 -top-16 h-60 w-60 rounded-full bg-white/10"></div>
         <div class="absolute bottom-0 left-0 h-40 w-40 rounded-full bg-white/5"></div>
 
-        <div
-            class="relative z-10 flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
+        <div class="relative z-10 flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
 
             <!-- left -->
             <div class="flex items-center gap-5">
@@ -17,11 +15,7 @@
                 <div
                     class="flex h-16 w-16 items-center justify-center rounded-2xl border border-white/10 bg-white/10 backdrop-blur">
 
-                    <iconify-icon
-                        icon="solar:clipboard-check-bold"
-                        width="34"
-                        height="34"
-                        class="text-white">
+                    <iconify-icon icon="solar:clipboard-check-bold" width="34" height="34" class="text-white">
                     </iconify-icon>
 
                 </div>
@@ -41,8 +35,7 @@
             </div>
 
             <!-- info -->
-            <div
-                class="rounded-2xl border border-white/15 bg-white/10 px-5 py-4 backdrop-blur">
+            <div class="rounded-2xl border border-white/15 bg-white/10 px-5 py-4 backdrop-blur">
 
                 <p class="text-xs uppercase tracking-[0.2em] text-blue-100">
                     Kehadiran Hari Ini
@@ -81,12 +74,9 @@
 
                 </div>
 
-                <div
-                    class="flex h-14 w-14 items-center justify-center rounded-2xl bg-blue-100 text-blue-main">
+                <div class="flex h-14 w-14 items-center justify-center rounded-2xl bg-blue-100 text-blue-main">
 
-                    <iconify-icon
-                        icon="mdi:account-group"
-                        width="28">
+                    <iconify-icon icon="mdi:account-group" width="28">
                     </iconify-icon>
 
                 </div>
@@ -115,12 +105,9 @@
 
                 </div>
 
-                <div
-                    class="flex h-14 w-14 items-center justify-center rounded-2xl bg-emerald-100 text-emerald-600">
+                <div class="flex h-14 w-14 items-center justify-center rounded-2xl bg-emerald-100 text-emerald-600">
 
-                    <iconify-icon
-                        icon="mdi:check-circle"
-                        width="28">
+                    <iconify-icon icon="mdi:check-circle" width="28">
                     </iconify-icon>
 
                 </div>
@@ -149,12 +136,9 @@
 
                 </div>
 
-                <div
-                    class="flex h-14 w-14 items-center justify-center rounded-2xl bg-amber-100 text-amber-600">
+                <div class="flex h-14 w-14 items-center justify-center rounded-2xl bg-amber-100 text-amber-600">
 
-                    <iconify-icon
-                        icon="mdi:emoticon-sick-outline"
-                        width="28">
+                    <iconify-icon icon="mdi:emoticon-sick-outline" width="28">
                     </iconify-icon>
 
                 </div>
@@ -183,12 +167,9 @@
 
                 </div>
 
-                <div
-                    class="flex h-14 w-14 items-center justify-center rounded-2xl bg-orange-100 text-orange-500">
+                <div class="flex h-14 w-14 items-center justify-center rounded-2xl bg-orange-100 text-orange-500">
 
-                    <iconify-icon
-                        icon="mdi:file-document-outline"
-                        width="28">
+                    <iconify-icon icon="mdi:file-document-outline" width="28">
                     </iconify-icon>
 
                 </div>
@@ -217,12 +198,9 @@
 
                 </div>
 
-                <div
-                    class="flex h-14 w-14 items-center justify-center rounded-2xl bg-rose-100 text-rose-600">
+                <div class="flex h-14 w-14 items-center justify-center rounded-2xl bg-rose-100 text-rose-600">
 
-                    <iconify-icon
-                        icon="mdi:close-circle-outline"
-                        width="28">
+                    <iconify-icon icon="mdi:close-circle-outline" width="28">
                     </iconify-icon>
 
                 </div>
@@ -251,12 +229,9 @@
 
                 </div>
 
-                <div
-                    class="flex h-14 w-14 items-center justify-center rounded-2xl bg-cyan-100 text-cyan-600">
+                <div class="flex h-14 w-14 items-center justify-center rounded-2xl bg-cyan-100 text-cyan-600">
 
-                    <iconify-icon
-                        icon="mdi:chart-donut"
-                        width="28">
+                    <iconify-icon icon="mdi:chart-donut" width="28">
                     </iconify-icon>
 
                 </div>
@@ -268,12 +243,10 @@
     </div>
 
     <!-- FILTER -->
-    <div
-        class="rounded-3xl border border-gray-200 bg-white p-6 shadow-sm">
+    <div class="rounded-3xl border border-gray-200 bg-white p-6 shadow-sm">
 
         <!-- heading -->
-        <div
-            class="mb-6 flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
+        <div class="mb-6 flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
 
             <div>
 
@@ -287,8 +260,7 @@
 
             </div>
 
-            <div
-                class="rounded-full bg-blue-50 px-4 py-2 text-sm font-semibold text-blue-main">
+            <div class="rounded-full bg-blue-50 px-4 py-2 text-sm font-semibold text-blue-main">
 
                 Data realtime
 
@@ -303,111 +275,53 @@
             <div class="grid grid-cols-1 gap-3 sm:grid-cols-2">
 
                 <div>
-                    <label
-                        class="mb-2 block text-sm font-semibold text-gray-700">
+                    <label class="mb-2 block text-sm font-semibold text-gray-700">
                         Dari Tanggal
                     </label>
 
-                    <input
-                        type="date"
-                        wire:model.live="filterTanggalDari"
+                    <input type="date" wire:model.live="filterTanggalDari"
                         class="w-full rounded-2xl border border-gray-300 bg-gray-50 px-4 py-3 text-sm transition hover:border-blue-main hover:bg-white focus:border-blue-main focus:outline-none focus:ring-4 focus:ring-blue-100" />
                 </div>
 
                 <div>
-                    <label
-                        class="mb-2 block text-sm font-semibold text-gray-700">
+                    <label class="mb-2 block text-sm font-semibold text-gray-700">
                         Sampai Tanggal
                     </label>
 
-                    <input
-                        type="date"
-                        wire:model.live="filterTanggalSampai"
+                    <input type="date" wire:model.live="filterTanggalSampai"
                         class="w-full rounded-2xl border border-gray-300 bg-gray-50 px-4 py-3 text-sm transition hover:border-blue-main hover:bg-white focus:border-blue-main focus:outline-none focus:ring-4 focus:ring-blue-100" />
                 </div>
 
             </div>
 
             <!-- tingkat -->
-            <livewire:components.searchable-select
-                wire:model.live="filterTingkat"
-                label="Tingkat"
-                placeholder="Cari tingkat..."
-                :options="$listRombel->pluck('tingkat')->filter()->sortBy('nama')->unique('id')->values()"
-                value-key="id"
-                label-key="nama"
-                all-label="Semua Tingkat"
-                not-found-text="Tingkat tidak ditemukan."
-                input-size="md"
-                width="full"
-                icon="mdi:magnify"
-                icon-size="22"
-                icon-position="right"
-                icon-offset="4"
-                icon-class="text-gray-500"
-                dropdown-height="md"
-                input-class="bg-white"
-                dropdown-class="shadow-2xl"
-                option-class="font-medium"
-                check-icon="mdi:check"
-                check-icon-size="20"
-                check-icon-class="text-black-500" />
+            <livewire:components.searchable-select wire:model.live="filterTingkat" label="Tingkat"
+                placeholder="Cari tingkat..." :options="$listRombel->pluck('tingkat')->filter()->sortBy('nama')->unique('id')->values()" value-key="id" label-key="nama"
+                all-label="Semua Tingkat" not-found-text="Tingkat tidak ditemukan." input-size="md" width="full"
+                icon="mdi:magnify" icon-size="22" icon-position="right" icon-offset="4" icon-class="text-gray-500"
+                dropdown-height="md" input-class="bg-white" dropdown-class="shadow-2xl" option-class="font-medium"
+                check-icon="mdi:check" check-icon-size="20" check-icon-class="text-black-500" />
 
             <!-- jurusan -->
-            <livewire:components.searchable-select
-                wire:model.live="filterJurusan"
-                label="Jurusan"
-                placeholder="Cari jurusan..."
-                :options="$filteredJurusan"
-                value-key="id"
-                label-key="nama"
-                all-label="Semua Jurusan"
-                not-found-text="Jurusan tidak ditemukan."
-                input-size="md"
-                width="full"
-                icon="mdi:magnify"
-                icon-size="22"
-                icon-position="right"
-                icon-offset="4"
-                icon-class="text-gray-500"
-                dropdown-height="md"
-                input-class="bg-white"
-                dropdown-class="shadow-2xl"
-                option-class="font-medium"
-                check-icon="mdi:check"
-                check-icon-size="20"
-                check-icon-class="text-black-500" />
+            <livewire:components.searchable-select wire:model.live="filterJurusan" label="Jurusan"
+                placeholder="Cari jurusan..." :options="$filteredJurusan" value-key="id" label-key="nama"
+                all-label="Semua Jurusan" not-found-text="Jurusan tidak ditemukan." input-size="md" width="full"
+                icon="mdi:magnify" icon-size="22" icon-position="right" icon-offset="4" icon-class="text-gray-500"
+                dropdown-height="md" input-class="bg-white" dropdown-class="shadow-2xl" option-class="font-medium"
+                check-icon="mdi:check" check-icon-size="20" check-icon-class="text-black-500" />
 
             <!-- kelas / indexs -->
-            <livewire:components.searchable-select
-                wire:model.live="filterIndeks"
-                label="Kelas"
-                placeholder="Cari kelas..."
-                :options="$filteredIndeks"
-                value-key="id"
-                label-key="nama"
-                all-label="Semua Kelas"
-                not-found-text="Kelas tidak ditemukan."
-                input-size="md"
-                width="full"
-                icon="mdi:magnify"
-                icon-size="22"
-                icon-position="right"
-                icon-offset="4"
-                icon-class="text-gray-500"
-                dropdown-height="md"
-                input-class="bg-white"
-                dropdown-class="shadow-2xl"
-                option-class="font-medium"
-                check-icon="mdi:check"
-                check-icon-size="20"
-                check-icon-class="text-black-500" />
+            <livewire:components.searchable-select wire:model.live="filterIndeks" label="Kelas"
+                placeholder="Cari kelas..." :options="$filteredIndeks" value-key="id" label-key="nama"
+                all-label="Semua Kelas" not-found-text="Kelas tidak ditemukan." input-size="md" width="full"
+                icon="mdi:magnify" icon-size="22" icon-position="right" icon-offset="4" icon-class="text-gray-500"
+                dropdown-height="md" input-class="bg-white" dropdown-class="shadow-2xl" option-class="font-medium"
+                check-icon="mdi:check" check-icon-size="20" check-icon-class="text-black-500" />
         </div>
     </div>
 
     <!-- CHART -->
-    <div
-        class="overflow-hidden rounded-3xl border border-gray-200 bg-white shadow-sm" wire:ignore>
+    <div class="overflow-hidden rounded-3xl border border-gray-200 bg-white shadow-sm" wire:ignore>
 
         <!-- top -->
         <div
@@ -443,9 +357,7 @@
         <!-- chart -->
         <div class="p-6">
 
-            <div
-                id="chart-rekap-absen-murid"
-                class="h-[380px] w-full">
+            <div id="chart-rekap-absen-murid" class="h-[380px] w-full">
             </div>
 
         </div>
@@ -453,8 +365,7 @@
     </div>
 
     <!-- EXPORT -->
-    <div
-        class=" rounded-3xl border border-gray-200 bg-white shadow-sm">
+    <div class=" rounded-3xl border border-gray-200 bg-white shadow-sm">
 
         <!-- header -->
         <div class="border-b border-gray-200 px-6 py-5">
@@ -479,39 +390,29 @@
                 <div class="grid gap-4 sm:grid-cols-2">
 
                     <div>
-                        <label
-                            class="mb-2 block text-sm font-semibold text-gray-700">
+                        <label class="mb-2 block text-sm font-semibold text-gray-700">
                             Dari Tanggal
                         </label>
 
-                        <input
-                            type="date"
-                            wire:model.live="exportTanggalDari"
+                        <input type="date" wire:model.live="exportTanggalDari"
                             class="w-full rounded-2xl border border-gray-300 px-4 py-3 text-sm transition hover:border-blue-main focus:border-blue-main focus:outline-none focus:ring-4 focus:ring-blue-100" />
                     </div>
 
                     <div>
-                        <label
-                            class="mb-2 block text-sm font-semibold text-gray-700">
+                        <label class="mb-2 block text-sm font-semibold text-gray-700">
                             Sampai Tanggal
                         </label>
 
-                        <input
-                            type="date"
-                            wire:model.live="exportTanggalSampai"
+                        <input type="date" wire:model.live="exportTanggalSampai"
                             class="w-full rounded-2xl border border-gray-300 px-4 py-3 text-sm transition hover:border-blue-main focus:border-blue-main focus:outline-none focus:ring-4 focus:ring-blue-100" />
                     </div>
 
                 </div>
 
                 <!-- Kelas -->
-                <livewire:components.searchable-select
-                    wire:model.live="exportRombelId"
-                    :options="$listRombel"
-                    value-key="id" label-key="nama_lengkap"
-                    label="Kelas" placeholder="Cari kelas..."
-                    all-label="Semua kelas"
-                    not-found-text="Pilihan tidak ditemukan." />
+                <livewire:components.searchable-select wire:model.live="exportRombelId" :options="$listRombel"
+                    value-key="id" label-key="nama_lengkap" label="Kelas" placeholder="Cari kelas..."
+                    all-label="Semua kelas" not-found-text="Pilihan tidak ditemukan." />
 
             </div>
 
@@ -529,9 +430,7 @@
 
                 <div class="mt-6">
 
-                    <button
-                        wire:click="exportExcel"
-                        wire:loading.attr="disabled"
+                    <button wire:click="exportExcel" wire:loading.attr="disabled"
                         class="rounded-2xl bg-emerald-500 px-4 py-3 text-sm font-semibold transition hover:bg-emerald-600 disabled:opacity-60">
 
                         <span wire:loading.remove>
@@ -553,8 +452,7 @@
     </div>
 
     <!-- TABLE -->
-    <div
-        class="overflow-hidden rounded-3xl border border-gray-200 bg-white shadow-sm">
+    <div class="overflow-hidden rounded-3xl border border-gray-200 bg-white shadow-sm">
 
         <!-- top -->
         <div
@@ -575,19 +473,12 @@
             <!-- search -->
             <div class="relative w-full lg:w-80">
 
-                <input
-                    type="search"
-                    wire:model.live.debounce.500ms="search"
-                    placeholder="Cari nama murid..."
+                <input type="search" wire:model.live.debounce.500ms="search" placeholder="Cari nama murid..."
                     class="w-full rounded-2xl border border-gray-300 bg-gray-50 py-3 pl-4 pr-12 text-sm transition placeholder:text-gray-400 hover:border-blue-main focus:border-blue-main focus:outline-none focus:ring-4 focus:ring-blue-100" />
 
-                <div
-                    class="absolute inset-y-0 right-4 flex items-center text-gray-400">
+                <div class="absolute inset-y-0 right-4 flex items-center text-gray-400">
 
-                    <iconify-icon
-                        icon="mdi:account-search-outline"
-                        width="22"
-                        height="22">
+                    <iconify-icon icon="mdi:account-search-outline" width="22" height="22">
                     </iconify-icon>
 
                 </div>
@@ -624,7 +515,6 @@
                 <tbody>
 
                     @forelse ($listAbsen as $index => $item)
-
                         @php
                             $statusValue = strtolower((string) $item->status);
 
@@ -648,10 +538,8 @@
 
                                 <div class="flex items-center gap-4">
 
-                                    <x-murid-avatar
-                                        :murid="$item->murid"
-                                        class="flex h-12 w-12 items-center justify-center rounded-2xl bg-blue-100 font-bold uppercase text-blue-main"
-                                    />
+                                    <x-murid-avatar :murid="$item->murid"
+                                        class="flex h-12 w-12 items-center justify-center rounded-2xl bg-blue-100 font-bold uppercase text-blue-main" />
 
                                     <div>
 
@@ -678,8 +566,7 @@
                             <td class="px-5 py-5 text-center">
 
                                 <div
-                                    class="{{ $statusClass }} inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-xs font-semibold capitalize"
-                                >
+                                    class="{{ $statusClass }} inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-xs font-semibold capitalize">
 
                                     <div class="h-2 w-2 rounded-full bg-current"></div>
 
@@ -693,36 +580,8 @@
 
                     @empty
 
-                        <tr>
-
-                            <td colspan="4" class="px-6 py-14 text-center">
-
-                                <div class="flex flex-col items-center justify-center">
-
-                                    <div
-                                        class="mb-4 flex h-20 w-20 items-center justify-center rounded-3xl bg-gray-100 text-gray-400"
-                                    >
-                                        <iconify-icon
-                                            icon="solar:box-bold"
-                                            width="38"
-                                            height="38"
-                                        ></iconify-icon>
-                                    </div>
-
-                                    <h2 class="text-lg font-bold text-gray-700">
-                                        Data tidak ditemukan
-                                    </h2>
-
-                                    <p class="mt-1 text-sm text-gray-500">
-                                        Tidak ada data murid yang tersedia.
-                                    </p>
-
-                                </div>
-
-                            </td>
-
-                        </tr>
-
+                        <x-empty-state icon="mdi:account-file-text-outline" title="Data rekap kosong"
+                            description="Belum ada data rekap yang tersedia." :colspan="4"></x-empty-state>
                     @endforelse
 
                 </tbody>
@@ -735,7 +594,6 @@
         <div class="space-y-3 lg:hidden">
 
             @forelse ($listAbsen as $index => $item)
-
                 @php
                     $statusValue = strtolower((string) $item->status);
 
@@ -747,26 +605,20 @@
                     };
                 @endphp
 
-                <div
-                    x-data="{ open: false }"
-                    class="overflow-hidden border border-t-0 border-gray-200 bg-white"
-                >
+                <div x-data="{ open: false }" class="overflow-hidden border border-t-0 border-gray-200 bg-white">
 
                     {{-- SUMMARY --}}
                     <div class="flex items-center gap-3 p-4">
 
                         {{-- No --}}
                         <div
-                            class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-gray-100 text-sm font-semibold text-gray-600"
-                        >
+                            class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-gray-100 text-sm font-semibold text-gray-600">
                             {{ $index + 1 }}
                         </div>
 
                         {{-- Avatar --}}
-                        <x-murid-avatar
-                            :murid="$item->murid"
-                            class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-blue-100 font-bold uppercase text-blue-main"
-                        />
+                        <x-murid-avatar :murid="$item->murid"
+                            class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-blue-100 font-bold uppercase text-blue-main" />
 
                         {{-- Informasi utama --}}
                         <div class="min-w-0 flex-1">
@@ -783,38 +635,24 @@
 
                         {{-- Status --}}
                         <span
-                            class="{{ $statusClass }} hidden shrink-0 items-center gap-1.5 rounded-full px-3 py-1 text-xs font-semibold capitalize sm:inline-flex"
-                        >
+                            class="{{ $statusClass }} hidden shrink-0 items-center gap-1.5 rounded-full px-3 py-1 text-xs font-semibold capitalize sm:inline-flex">
                             <span class="h-1.5 w-1.5 rounded-full bg-current"></span>
                             {{ $item->status }}
                         </span>
 
                         {{-- Chevron --}}
-                        <button
-                            type="button"
-                            @click="open = !open"
-                            :aria-expanded="open"
+                        <button type="button" @click="open = !open" :aria-expanded="open"
                             aria-label="Lihat detail absensi"
-                            class="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl text-gray-500 transition hover:bg-gray-100 hover:text-gray-700"
-                        >
-                            <iconify-icon
-                                icon="lineicons:chevron-down"
-                                width="20"
-                                height="20"
+                            class="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl text-gray-500 transition hover:bg-gray-100 hover:text-gray-700">
+                            <iconify-icon icon="lineicons:chevron-down" width="20" height="20"
                                 class="transition-transform duration-200"
-                                :class="{ 'rotate-180': open }"
-                            ></iconify-icon>
+                                :class="{ 'rotate-180': open }"></iconify-icon>
                         </button>
 
                     </div>
 
-
                     {{-- DETAIL --}}
-                    <div
-                        x-show="open"
-                        x-collapse
-                        class="border-t border-gray-200 bg-gray-50"
-                    >
+                    <div x-show="open" x-collapse class="border-t border-gray-200 bg-gray-50">
 
                         <div class="space-y-4 p-4">
 
@@ -831,7 +669,6 @@
 
                             </div>
 
-
                             {{-- Kelas --}}
                             <div>
 
@@ -845,7 +682,6 @@
 
                             </div>
 
-
                             {{-- Status --}}
                             <div>
 
@@ -854,8 +690,7 @@
                                 </p>
 
                                 <span
-                                    class="{{ $statusClass }} inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-xs font-semibold capitalize"
-                                >
+                                    class="{{ $statusClass }} inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-xs font-semibold capitalize">
 
                                     <span class="h-2 w-2 rounded-full bg-current"></span>
 
@@ -873,40 +708,14 @@
 
             @empty
 
-                {{-- EMPTY STATE MOBILE + TABLET --}}
-                <div class="px-6 py-14 text-center">
-
-                    <div class="flex flex-col items-center justify-center">
-
-                        <div
-                            class="mb-4 flex h-20 w-20 items-center justify-center rounded-3xl bg-gray-100 text-gray-400"
-                        >
-                            <iconify-icon
-                                icon="solar:box-bold"
-                                width="38"
-                                height="38"
-                            ></iconify-icon>
-                        </div>
-
-                        <h2 class="text-lg font-bold text-gray-700">
-                            Data tidak ditemukan
-                        </h2>
-
-                        <p class="mt-1 text-sm text-gray-500">
-                            Tidak ada data murid yang tersedia.
-                        </p>
-
-                    </div>
-
-                </div>
-
+                <x-empty-state icon="mdi:account-file-text-outline" title="Data rekap kosong"
+                    description="Belum ada data rekap yang tersedia."></x-empty-state>
             @endforelse
 
         </div>
 
         <!-- pagination -->
-        <div
-            class="border-t border-gray-200 bg-gray-50 px-6 py-4">
+        <div class="border-t border-gray-200 bg-gray-50 px-6 py-4">
 
             {{ $listAbsen->links('livewire.components.pagination') }}
 
@@ -917,16 +726,18 @@
 </div>
 
 @script
-<script type="module">
-    import('{{ Vite::asset('Modules/Laporan/resources/assets/js/rekap-absen-murid-chart.js') }}')
-    .then(() => {
-        const { initRekapAbsenMuridChart } = window;
+    <script type="module">
+        import('{{ Vite::asset('Modules/Laporan/resources/assets/js/rekap-absen-murid-chart.js') }}')
+            .then(() => {
+                const {
+                    initRekapAbsenMuridChart
+                } = window;
 
-        if (typeof initRekapAbsenMuridChart !== 'function') {
-            throw new Error('Rekap absensi chart initializer gagal dimuat.');
-        }
+                if (typeof initRekapAbsenMuridChart !== 'function') {
+                    throw new Error('Rekap absensi chart initializer gagal dimuat.');
+                }
 
-        initRekapAbsenMuridChart(@js($chartRekap));
-    });
-</script>
+                initRekapAbsenMuridChart(@js($chartRekap));
+            });
+    </script>
 @endscript
