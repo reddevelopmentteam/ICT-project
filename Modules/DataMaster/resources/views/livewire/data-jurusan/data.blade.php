@@ -1,34 +1,29 @@
-<div
-    x-data="{
-        selected: [],
+<div x-data="{
+    selected: [],
 
-        getPageIds() {
-            return Array.from(
-                this.$root.querySelectorAll('.jurusan-row-checkbox')
-            ).map(el => el.value)
-        },
+    getPageIds() {
+        return Array.from(
+            this.$root.querySelectorAll('.jurusan-row-checkbox')
+        ).map(el => el.value)
+    },
 
-        toggleAll(e) {
-            if (e.target.checked) {
-                this.selected = this.getPageIds()
-            } else {
-                this.selected = []
-            }
+    toggleAll(e) {
+        if (e.target.checked) {
+            this.selected = this.getPageIds()
+        } else {
+            this.selected = []
         }
-    }"
-    class="space-y-6"
->
+    }
+}" class="space-y-6">
 
     <!-- HEADER -->
-    <div
-        class="relative overflow-hidden rounded-3xl bg-gradient-to-r from-blue-main to-blue-deep p-6 shadow-lg">
+    <div class="relative overflow-hidden rounded-3xl bg-gradient-to-r from-blue-main to-blue-deep p-6 shadow-lg">
 
         <!-- effect -->
         <div class="absolute -top-10 -right-10 h-40 w-40 rounded-full bg-white/10"></div>
         <div class="absolute bottom-0 left-0 h-32 w-32 rounded-full bg-white/4"></div>
 
-        <div
-            class="relative z-10 flex flex-col gap-5 lg:flex-row lg:items-center lg:justify-between">
+        <div class="relative z-10 flex flex-col gap-5 lg:flex-row lg:items-center lg:justify-between">
 
             <!-- title -->
             <div class="flex items-center gap-4">
@@ -36,11 +31,7 @@
                 <div
                     class="hidden md:flex h-16 w-16 items-center justify-center rounded-2xl border border-white/10 bg-white/10 backdrop-blur">
 
-                    <iconify-icon
-                        icon="solar:library-bold"
-                        width="34"
-                        height="34"
-                        class="text-white">
+                    <iconify-icon icon="solar:library-bold" width="34" height="34" class="text-white">
                     </iconify-icon>
 
                 </div>
@@ -68,10 +59,7 @@
                     <button
                         class="w-full group flex items-center justify-center gap-2 rounded-2xl bg-white px-5 py-3 text-sm font-semibold text-blue-main shadow-lg transition hover:-translate-y-0.5 hover:shadow-xl">
 
-                        <iconify-icon
-                            icon="line-md:plus"
-                            width="22"
-                            height="22"
+                        <iconify-icon icon="line-md:plus" width="22" height="22"
                             class="transition duration-300 group-hover:rotate-90">
                         </iconify-icon>
 
@@ -107,8 +95,7 @@
     </div>
 
     <!-- TABLE -->
-    <div
-        class="overflow-hidden rounded-3xl border border-gray-200 bg-white shadow-sm">
+    <div class="overflow-hidden rounded-3xl border border-gray-200 bg-white shadow-sm">
 
         <!-- top -->
         <div
@@ -131,22 +118,15 @@
             <div class="flex flex-col gap-3 sm:flex-row sm:items-center">
 
                 <!-- selected -->
-                <div
-                    class="flex items-center gap-3">
+                <div class="flex items-center gap-3">
 
                     <!-- menu -->
-                    <div
-                        class="relative"
-                        x-data="{ openModalColon: false }">
+                    <div class="relative" x-data="{ openModalColon: false }">
 
-                        <button
-                            @click="openModalColon = !openModalColon"
+                        <button @click="openModalColon = !openModalColon"
                             class="flex h-11 w-11 items-center justify-center rounded-2xl bg-gray-100 text-gray-600 transition hover:bg-blue-main hover:text-white">
 
-                            <iconify-icon
-                                icon="lineicons:menu-meatballs-1"
-                                width="20"
-                                height="20">
+                            <iconify-icon icon="lineicons:menu-meatballs-1" width="20" height="20">
                             </iconify-icon>
 
                         </button>
@@ -156,8 +136,7 @@
                     </div>
 
                     <!-- selected count -->
-                    <div
-                        class="rounded-full bg-blue-50 px-4 py-2 text-sm font-semibold text-blue-main">
+                    <div class="rounded-full bg-blue-50 px-4 py-2 text-sm font-semibold text-blue-main">
 
                         <span x-text="selected.length"></span>
                         dipilih
@@ -169,20 +148,13 @@
                 <!-- search -->
                 <div class="relative w-full sm:w-72">
 
-                    <input
-                        type="search"
-                        name="search"
-                        wire:model.live.debounce.500ms="search"
+                    <input type="search" name="search" wire:model.live.debounce.500ms="search"
                         placeholder="Cari nama jurusan..."
                         class="w-full rounded-2xl border border-gray-300 bg-gray-50 py-3 pl-4 pr-12 text-sm transition placeholder:text-gray-400 hover:border-blue-main focus:border-blue-main focus:outline-none focus:ring-4 focus:ring-blue-100" />
 
-                    <div
-                        class="absolute inset-y-0 right-4 flex items-center text-gray-400">
+                    <div class="absolute inset-y-0 right-4 flex items-center text-gray-400">
 
-                        <iconify-icon
-                            icon="mdi:account-search-outline"
-                            width="22"
-                            height="22">
+                        <iconify-icon icon="mdi:account-search-outline" width="22" height="22">
                         </iconify-icon>
 
                     </div>
@@ -203,9 +175,7 @@
                     <tr>
 
                         <th class="w-5 px-5 py-4 text-center">
-                            <input
-                                type="checkbox"
-                                @click="toggleAll">
+                            <input type="checkbox" @click="toggleAll">
                         </th>
 
                         <th class="w-10 px-5 py-4 text-center font-semibold">
@@ -227,18 +197,13 @@
                 <tbody>
 
                     @forelse ($listJurusan as $index => $jurusan)
-
-                        <tr
-                            class="border-t border-gray-100 transition hover:bg-gray-50">
+                        <tr class="border-t border-gray-100 transition hover:bg-gray-50">
 
                             {{-- checkbox --}}
                             <td class="px-5 py-5 text-center">
 
-                                <input
-                                    type="checkbox"
-                                    class="jurusan-row-checkbox rounded border-gray-300"
-                                    value="{{ $jurusan->id }}"
-                                    x-model="selected">
+                                <input type="checkbox" class="jurusan-row-checkbox rounded border-gray-300"
+                                    value="{{ $jurusan->id }}" x-model="selected">
 
                             </td>
 
@@ -258,10 +223,7 @@
                                     <div
                                         class="flex h-12 w-12 items-center justify-center rounded-2xl bg-blue-100 text-blue-main">
 
-                                        <iconify-icon
-                                            icon="solar:book-bold"
-                                            width="22"
-                                            height="22">
+                                        <iconify-icon icon="solar:book-bold" width="22" height="22">
                                         </iconify-icon>
 
                                     </div>
@@ -289,17 +251,12 @@
                                 <div class="flex items-center justify-center gap-2">
 
                                     {{-- edit --}}
-                                    <a
-                                        href="{{ route('edit-jurusan', $jurusan->id) }}"
-                                        wire:navigate>
+                                    <a href="{{ route('edit-jurusan', $jurusan->id) }}" wire:navigate>
 
                                         <button
                                             class="flex h-10 w-10 items-center justify-center rounded-2xl bg-amber-400 text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-amber-500">
 
-                                            <iconify-icon
-                                                icon="lineicons:pencil-1"
-                                                width="20"
-                                                height="20">
+                                            <iconify-icon icon="lineicons:pencil-1" width="20" height="20">
                                             </iconify-icon>
 
                                         </button>
@@ -307,15 +264,11 @@
                                     </a>
 
                                     {{-- delete --}}
-                                    <button
-                                        type="button"
+                                    <button type="button"
                                         @click="$dispatch('open-delete-jurusan', { id: {{ (int) $jurusan->id }} })"
                                         class="flex h-10 w-10 items-center justify-center rounded-2xl bg-rose-500 text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-rose-600">
 
-                                        <iconify-icon
-                                            icon="lineicons:trash-3"
-                                            width="20"
-                                            height="20">
+                                        <iconify-icon icon="lineicons:trash-3" width="20" height="20">
                                         </iconify-icon>
 
                                     </button>
@@ -328,39 +281,18 @@
 
                     @empty
 
-                        <tr>
-
-                            <td
-                                colspan="4"
-                                class="px-6 py-14 text-center">
-
-                                <div class="flex flex-col items-center justify-center">
-
-                                    <div
-                                        class="mb-4 flex h-20 w-20 items-center justify-center rounded-3xl bg-gray-100 text-gray-400">
-
-                                        <iconify-icon
-                                            icon="solar:box-bold"
-                                            width="38"
-                                            height="38">
-                                        </iconify-icon>
-
-                                    </div>
-
-                                    <h2 class="text-lg font-bold text-gray-700">
-                                        Data jurusan kosong
-                                    </h2>
-
-                                    <p class="mt-1 text-sm text-gray-500">
-                                        Belum ada data jurusan yang tersedia.
-                                    </p>
-
-                                </div>
-
-                            </td>
-
-                        </tr>
-
+                        <x-empty-state icon="mdi:academic-cap-outline" title="Data jurusan kosong"
+                            description="Belum ada data jurusan yang tersedia." :colspan="4">
+                            <a href="{{ route('tambah-jurusan') }}" wire:navigate>
+                                <button
+                                    class="group flex items-center justify-center gap-2 rounded-2xl bg-blue-main px-5 py-3 text-sm font-semibold text-white shadow-lg transition hover:-translate-y-0.5 hover:bg-blue-deep hover:shadow-xl active:scale-95">
+                                    <iconify-icon icon="line-md:plus" width="22" height="22"
+                                        class="transition duration-300 group-hover:rotate-90">
+                                    </iconify-icon>
+                                    Tambah Jurusan
+                                </button>
+                            </a>
+                        </x-empty-state>
                     @endforelse
 
                 </tbody>
@@ -373,20 +305,14 @@
         <div class="space-y-3 lg:hidden">
 
             @forelse ($listJurusan as $index => $jurusan)
-
-                <div
-                    x-data="{ open: false }"
-                    class="overflow-hidden border border-t-0 border-gray-200 bg-white">
+                <div x-data="{ open: false }" class="overflow-hidden border border-t-0 border-gray-200 bg-white">
 
                     {{-- SUMMARY --}}
                     <div class="flex items-center gap-3 p-4">
 
                         {{-- checkbox --}}
-                        <input
-                            type="checkbox"
-                            class="jurusan-row-checkbox shrink-0 rounded border-gray-300"
-                            value="{{ $jurusan->id }}"
-                            x-model="selected">
+                        <input type="checkbox" class="jurusan-row-checkbox shrink-0 rounded border-gray-300"
+                            value="{{ $jurusan->id }}" x-model="selected">
 
                         {{-- number --}}
                         <div
@@ -400,10 +326,7 @@
                         <div
                             class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-blue-100 text-blue-main">
 
-                            <iconify-icon
-                                icon="solar:book-bold"
-                                width="22"
-                                height="22">
+                            <iconify-icon icon="solar:book-bold" width="22" height="22">
                             </iconify-icon>
 
                         </div>
@@ -422,18 +345,12 @@
                         </div>
 
                         {{-- expand --}}
-                        <button
-                            type="button"
-                            @click="open = !open"
+                        <button type="button" @click="open = !open"
                             class="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl text-gray-500 transition hover:bg-gray-100 hover:text-gray-700"
                             :aria-expanded="open">
 
-                            <iconify-icon
-                                icon="lineicons:chevron-down"
-                                width="20"
-                                height="20"
-                                class="transition-transform duration-200"
-                                :class="{ 'rotate-180': open }">
+                            <iconify-icon icon="lineicons:chevron-down" width="20" height="20"
+                                class="transition-transform duration-200" :class="{ 'rotate-180': open }">
                             </iconify-icon>
 
                         </button>
@@ -441,10 +358,7 @@
                     </div>
 
                     {{-- COLLAPSED DETAIL --}}
-                    <div
-                        x-show="open"
-                        x-collapse
-                        class="border-t border-gray-200 bg-gray-50">
+                    <div x-show="open" x-collapse class="border-t border-gray-200 bg-gray-50">
 
                         <div class="p-5">
 
@@ -466,15 +380,10 @@
                         <div class="flex items-center gap-2 border-t border-gray-200 p-4">
 
                             {{-- edit --}}
-                            <a
-                                href="{{ route('edit-jurusan', $jurusan->id) }}"
-                                wire:navigate
+                            <a href="{{ route('edit-jurusan', $jurusan->id) }}" wire:navigate
                                 class="flex flex-1 items-center justify-center gap-2 rounded-xl bg-amber-400 px-4 py-3 text-sm font-semibold text-white transition hover:bg-amber-500">
 
-                                <iconify-icon
-                                    icon="lineicons:pencil-1"
-                                    width="18"
-                                    height="18">
+                                <iconify-icon icon="lineicons:pencil-1" width="18" height="18">
                                 </iconify-icon>
 
                                 Edit
@@ -482,15 +391,11 @@
                             </a>
 
                             {{-- delete --}}
-                            <button
-                                type="button"
+                            <button type="button"
                                 @click="$dispatch('open-delete-jurusan', { id: {{ (int) $jurusan->id }} })"
                                 class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-rose-500 text-white transition hover:bg-rose-600">
 
-                                <iconify-icon
-                                    icon="lineicons:trash-3"
-                                    width="20"
-                                    height="20">
+                                <iconify-icon icon="lineicons:trash-3" width="20" height="20">
                                 </iconify-icon>
 
                             </button>
@@ -503,41 +408,24 @@
 
             @empty
 
-                {{-- empty state --}}
-                <div class="px-6 py-14 text-center">
-
-                    <div class="flex flex-col items-center justify-center">
-
-                        <div
-                            class="mb-4 flex h-20 w-20 items-center justify-center rounded-3xl bg-gray-100 text-gray-400">
-
-                            <iconify-icon
-                                icon="solar:box-bold"
-                                width="38"
-                                height="38">
+                <x-empty-state icon="mdi:academic-cap-outline" title="Data jurusan kosong"
+                    description="Belum ada data jurusan yang tersedia.">
+                    <a href="{{ route('tambah-jurusan') }}" wire:navigate>
+                        <button
+                            class="group flex items-center justify-center gap-2 rounded-2xl bg-blue-main px-5 py-3 text-sm font-semibold text-white shadow-lg transition hover:-translate-y-0.5 hover:bg-blue-deep hover:shadow-xl active:scale-95">
+                            <iconify-icon icon="line-md:plus" width="22" height="22"
+                                class="transition duration-300 group-hover:rotate-90">
                             </iconify-icon>
-
-                        </div>
-
-                        <h2 class="text-lg font-bold text-gray-700">
-                            Data jurusan kosong
-                        </h2>
-
-                        <p class="mt-1 text-sm text-gray-500">
-                            Belum ada data jurusan yang tersedia.
-                        </p>
-
-                    </div>
-
-                </div>
-
+                            Tambah Jurusan
+                        </button>
+                    </a>
+                </x-empty-state>
             @endforelse
 
         </div>
 
         <!-- pagination -->
-        <div
-            class="border-t border-gray-200 bg-gray-50 px-6 py-4">
+        <div class="border-t border-gray-200 bg-gray-50 px-6 py-4">
 
             {{ $listJurusan->links('livewire.components.pagination') }}
 

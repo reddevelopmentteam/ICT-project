@@ -1,15 +1,13 @@
 <div class="space-y-6">
 
     <!-- HERO -->
-    <div
-        class="relative overflow-hidden rounded-3xl bg-gradient-to-r from-blue-main to-blue-deep p-6 shadow-lg">
+    <div class="relative overflow-hidden rounded-3xl bg-gradient-to-r from-blue-main to-blue-deep p-6 shadow-lg">
 
         <!-- glow -->
         <div class="absolute -right-16 -top-16 h-60 w-60 rounded-full bg-white/10"></div>
         <div class="absolute bottom-0 left-0 h-40 w-40 rounded-full bg-white/10"></div>
 
-        <div
-            class="relative z-10 flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
+        <div class="relative z-10 flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
 
             <!-- left -->
             <div class="flex items-center gap-5">
@@ -17,11 +15,7 @@
                 <div
                     class="hidden md:flex h-16 w-16 items-center justify-center rounded-2xl border border-white/10 bg-white/10 backdrop-blur">
 
-                    <iconify-icon
-                        icon="solar:user-check-bold"
-                        width="34"
-                        height="34"
-                        class="text-white">
+                    <iconify-icon icon="solar:user-check-bold" width="34" height="34" class="text-white">
                     </iconify-icon>
 
                 </div>
@@ -41,8 +35,7 @@
             </div>
 
             <!-- right -->
-            <div
-                class="rounded-2xl border border-white/15 bg-white/10 px-5 py-4 backdrop-blur">
+            <div class="rounded-2xl border border-white/15 bg-white/10 px-5 py-4 backdrop-blur">
 
                 <p class="text-xs uppercase tracking-[0.2em] text-blue-100">
                     Total Data
@@ -59,12 +52,10 @@
     </div>
 
     <!-- FILTER -->
-    <div
-        class="rounded-3xl border border-gray-200 bg-white p-6 shadow-sm">
+    <div class="rounded-3xl border border-gray-200 bg-white p-6 shadow-sm">
 
         <!-- title -->
-        <div
-            class="mb-6 flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
+        <div class="mb-6 flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
 
             <div>
 
@@ -78,8 +69,7 @@
 
             </div>
 
-            <div
-                class="rounded-full bg-blue-50 px-4 py-2 text-sm font-semibold text-blue-main">
+            <div class="rounded-full bg-blue-50 px-4 py-2 text-sm font-semibold text-blue-main">
 
                 Data realtime
 
@@ -91,88 +81,66 @@
         <div class="grid grid-cols-1 gap-5 md:grid-cols-3">
 
             <!-- STATUS -->
-            <div
-                x-data="{
-                    open: false,
-                    selectedId: null,
-                    selectedLabel: null,
-
-                    toggle() {
-                        this.open = !this.open
-                    },
-
-                    select(id, label) {
-                        this.selectedId = id
-                        this.selectedLabel = label
-                        this.open = false
-
-                        $wire.set('filterStatus', id)
-                    }
-                }"
-                class="relative">
+            <div x-data="{
+                open: false,
+                selectedId: null,
+                selectedLabel: null,
+            
+                toggle() {
+                    this.open = !this.open
+                },
+            
+                select(id, label) {
+                    this.selectedId = id
+                    this.selectedLabel = label
+                    this.open = false
+            
+                    $wire.set('filterStatus', id)
+                }
+            }" class="relative">
 
                 <label class="mb-2 block text-sm font-semibold text-gray-700">
                     Status Kepegawaian
                 </label>
 
                 <!-- trigger -->
-                <div
-                    @click="toggle()"
+                <div @click="toggle()"
                     class="flex cursor-pointer items-center justify-between rounded-2xl border border-gray-300 bg-gray-50 px-4 py-3 text-sm transition hover:border-blue-main hover:bg-white">
 
-                    <span
-                        x-text="selectedLabel ?? 'Semua status'"
-                        class="text-gray-700">
+                    <span x-text="selectedLabel ?? 'Semua status'" class="text-gray-700">
                     </span>
 
-                    <iconify-icon
-                        icon="lineicons:chevron-up"
-                        width="20"
-                        height="20"
-                        class="text-gray-400 transition-transform"
-                        :class="{ 'rotate-180': open }">
+                    <iconify-icon icon="lineicons:chevron-up" width="20" height="20"
+                        class="text-gray-400 transition-transform" :class="{ 'rotate-180': open }">
                     </iconify-icon>
 
                 </div>
 
                 <!-- dropdown -->
-                <div
-                    x-show="open"
-                    x-transition
-                    @click.outside="open = false"
-                    style="display:none"
+                <div x-show="open" x-transition @click.outside="open = false" style="display:none"
                     class="absolute z-50 mt-2 max-h-52 w-full overflow-y-auto rounded-2xl border border-gray-200 bg-white shadow-xl">
 
-                    <div
-                        @click.prevent="select(null, 'Semua status')"
+                    <div @click.prevent="select(null, 'Semua status')"
                         class="flex cursor-pointer items-center justify-between px-4 py-3 transition hover:bg-blue-main hover:text-white">
 
                         <span>Semua status</span>
 
-                        <iconify-icon
-                            x-show="selectedId === null"
-                            icon="lineicons:check"
-                            width="18">
+                        <iconify-icon x-show="selectedId === null" icon="lineicons:check" width="18">
                         </iconify-icon>
 
                     </div>
 
                     @foreach (['PNS', 'Honorer'] as $index => $status)
-
-                        <div
-                            @click.prevent="select({{ $index }}, '{{ $status }}')"
+                        <div @click.prevent="select({{ $index }}, '{{ $status }}')"
                             class="flex cursor-pointer items-center justify-between px-4 py-3 transition hover:bg-blue-main hover:text-white">
 
                             <span>{{ $status }}</span>
 
-                            <iconify-icon
-                                x-show="selectedId == {{ $index }}"
-                                icon="lineicons:check"
+                            <iconify-icon x-show="selectedId == {{ $index }}" icon="lineicons:check"
                                 width="18">
                             </iconify-icon>
 
                         </div>
-
                     @endforeach
 
                 </div>
@@ -180,88 +148,66 @@
             </div>
 
             <!-- JENIS PTK -->
-            <div
-                x-data="{
-                    open: false,
-                    selectedId: null,
-                    selectedLabel: null,
-
-                    toggle() {
-                        this.open = !this.open
-                    },
-
-                    select(id, label) {
-                        this.selectedId = id
-                        this.selectedLabel = label
-                        this.open = false
-
-                        $wire.set('filterJenis', id)
-                    }
-                }"
-                class="relative">
+            <div x-data="{
+                open: false,
+                selectedId: null,
+                selectedLabel: null,
+            
+                toggle() {
+                    this.open = !this.open
+                },
+            
+                select(id, label) {
+                    this.selectedId = id
+                    this.selectedLabel = label
+                    this.open = false
+            
+                    $wire.set('filterJenis', id)
+                }
+            }" class="relative">
 
                 <label class="mb-2 block text-sm font-semibold text-gray-700">
                     Jenis PTK
                 </label>
 
                 <!-- trigger -->
-                <div
-                    @click="toggle()"
+                <div @click="toggle()"
                     class="flex cursor-pointer items-center justify-between rounded-2xl border border-gray-300 bg-gray-50 px-4 py-3 text-sm transition hover:border-blue-main hover:bg-white">
 
-                    <span
-                        x-text="selectedLabel ?? 'Semua jenis'"
-                        class="text-gray-700">
+                    <span x-text="selectedLabel ?? 'Semua jenis'" class="text-gray-700">
                     </span>
 
-                    <iconify-icon
-                        icon="lineicons:chevron-up"
-                        width="20"
-                        height="20"
-                        class="text-gray-400 transition-transform"
-                        :class="{ 'rotate-180': open }">
+                    <iconify-icon icon="lineicons:chevron-up" width="20" height="20"
+                        class="text-gray-400 transition-transform" :class="{ 'rotate-180': open }">
                     </iconify-icon>
 
                 </div>
 
                 <!-- dropdown -->
-                <div
-                    x-show="open"
-                    x-transition
-                    @click.outside="open = false"
-                    style="display:none"
+                <div x-show="open" x-transition @click.outside="open = false" style="display:none"
                     class="absolute z-50 mt-2 max-h-52 w-full overflow-y-auto rounded-2xl border border-gray-200 bg-white shadow-xl">
 
-                    <div
-                        @click.prevent="select(null, 'Semua jenis')"
+                    <div @click.prevent="select(null, 'Semua jenis')"
                         class="flex cursor-pointer items-center justify-between px-4 py-3 transition hover:bg-blue-main hover:text-white">
 
                         <span>Semua jenis</span>
 
-                        <iconify-icon
-                            x-show="selectedId === null"
-                            icon="lineicons:check"
-                            width="18">
+                        <iconify-icon x-show="selectedId === null" icon="lineicons:check" width="18">
                         </iconify-icon>
 
                     </div>
 
                     @foreach (['Guru Mapel', 'Guru BK'] as $index => $jenis)
-
-                        <div
-                            @click.prevent="select({{ $index }}, '{{ $jenis }}')"
+                        <div @click.prevent="select({{ $index }}, '{{ $jenis }}')"
                             class="flex cursor-pointer items-center justify-between px-4 py-3 transition hover:bg-blue-main hover:text-white">
 
                             <span>{{ $jenis }}</span>
 
-                            <iconify-icon
-                                x-show="selectedId == {{ $index }}"
-                                icon="lineicons:check"
+                            <iconify-icon x-show="selectedId == {{ $index }}" icon="lineicons:check"
                                 width="18">
                             </iconify-icon>
 
                         </div>
-
                     @endforeach
 
                 </div>
@@ -275,9 +221,7 @@
                     Tanggal Absen
                 </label>
 
-                <input
-                    type="date"
-                    wire:model.live="filterTanggal"
+                <input type="date" wire:model.live="filterTanggal"
                     class="w-full rounded-2xl border border-gray-300 bg-gray-50 px-4 py-3 text-sm transition hover:border-blue-main focus:border-blue-main focus:outline-none focus:ring-4 focus:ring-blue-100" />
 
             </div>
@@ -287,8 +231,7 @@
     </div>
 
     <!-- TABLE -->
-    <div
-        class="overflow-hidden rounded-3xl border border-gray-200 bg-white shadow-sm">
+    <div class="overflow-hidden rounded-3xl border border-gray-200 bg-white shadow-sm">
 
         <!-- top -->
         <div
@@ -313,19 +256,12 @@
             <!-- search -->
             <div class="relative w-full lg:w-80">
 
-                <input
-                    type="search"
-                    name="search"
-                    placeholder="Cari nama guru..."
+                <input type="search" name="search" placeholder="Cari nama guru..."
                     class="w-full rounded-2xl border border-gray-300 bg-gray-50 py-3 pl-4 pr-12 text-sm transition placeholder:text-gray-400 hover:border-blue-main focus:border-blue-main focus:outline-none focus:ring-4 focus:ring-blue-100" />
 
-                <div
-                    class="absolute inset-y-0 right-4 flex items-center text-gray-400">
+                <div class="absolute inset-y-0 right-4 flex items-center text-gray-400">
 
-                    <iconify-icon
-                        icon="mdi:account-search-outline"
-                        width="22"
-                        height="22">
+                    <iconify-icon icon="mdi:account-search-outline" width="22" height="22">
                     </iconify-icon>
 
                 </div>
@@ -377,7 +313,7 @@
 
                 <tbody>
 
-                    @foreach ([
+                    @forelse ([
                         [
                             'nuptk' => '123456789',
                             'nama' => 'Ghaizan',
@@ -395,7 +331,6 @@
                             'keterangan' => 'Acara keluarga',
                         ],
                     ] as $item)
-
                         @php
                             $statusValue = strtolower((string) $item['status']);
 
@@ -407,20 +342,17 @@
                             };
                         @endphp
 
-                        <tr
-                            class="border-t border-gray-100 transition hover:bg-gray-50">
+                        <tr class="border-t border-gray-100 transition hover:bg-gray-50">
 
                             <!-- no -->
-                            <td
-                                class="px-5 py-5 text-center font-medium text-gray-700">
+                            <td class="px-5 py-5 text-center font-medium text-gray-700">
 
                                 {{ $loop->iteration }}
 
                             </td>
 
                             <!-- nuptk -->
-                            <td
-                                class="px-5 py-5 text-center text-gray-600">
+                            <td class="px-5 py-5 text-center text-gray-600">
 
                                 {{ $item['nuptk'] }}
 
@@ -442,15 +374,13 @@
                                     <!-- info -->
                                     <div>
 
-                                        <h2
-                                            class="font-semibold text-gray-800">
+                                        <h2 class="font-semibold text-gray-800">
 
                                             {{ $item['nama'] }}
 
                                         </h2>
 
-                                        <p
-                                            class="mt-1 text-xs text-gray-400">
+                                        <p class="mt-1 text-xs text-gray-400">
 
                                             Guru aktif
 
@@ -468,8 +398,7 @@
                                 <div
                                     class="{{ $statusClass }} inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-xs font-semibold capitalize">
 
-                                    <div
-                                        class="h-2 w-2 rounded-full bg-current">
+                                    <div class="h-2 w-2 rounded-full bg-current">
                                     </div>
 
                                     {{ $item['status'] }}
@@ -503,8 +432,7 @@
                             </td>
 
                             <!-- ket -->
-                            <td
-                                class="px-5 py-5 text-gray-600">
+                            <td class="px-5 py-5 text-gray-600">
 
                                 {{ $item['keterangan'] }}
 
@@ -512,9 +440,11 @@
 
                         </tr>
 
-                    @endforeach
+                    @empty
 
-                </tbody>
+                        <x-empty-state icon="mdi:account-multiple-check-outline" title="Data guru kosong"
+                            description="Belum ada data guru yang tersedia." :colspan="7"></x-empty-state>
+                    @endforelse
 
             </table>
 

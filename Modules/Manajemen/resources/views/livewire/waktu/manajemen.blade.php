@@ -206,8 +206,14 @@
                         <tbody>
                             <template x-if="monthEvents().length === 0">
                                 <tr>
-                                    <td colspan="5" class="px-3 py-6 text-center text-gray-400">
-                                        Belum ada event khusus pada bulan ini.
+                                    <td colspan="5" class="px-6 py-14 text-center">
+                                        <div class="mx-auto flex w-fit max-w-full flex-col items-center justify-center text-center">
+                                            <div class="mb-4 flex h-20 w-20 items-center justify-center rounded-3xl bg-gray-100 text-gray-400">
+                                                <iconify-icon icon="mdi:timer-cog-outline" width="38" height="38"></iconify-icon>
+                                            </div>
+                                            <h2 class="text-lg font-bold text-gray-700">Belum ada event bulan ini</h2>
+                                            <p class="mt-1 text-sm text-gray-500">Belum ada event khusus pada bulan ini.</p>
+                                        </div>
                                     </td>
                                 </tr>
                             </template>
