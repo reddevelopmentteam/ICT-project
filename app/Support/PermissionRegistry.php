@@ -87,6 +87,7 @@ class PermissionRegistry
             'absensi' => 'Absensi',
             'data', 'data-murid', 'data-guru', 'data-kelas', 'data-jurusan' => 'Data Master',
             'manajemen', 'generate-qr' => 'Manajemen',
+            'pengaturan' => 'Pengaturan',
             default => 'General',
         };
     }
@@ -147,7 +148,7 @@ class PermissionRegistry
         }
 
         $orderedGroups = [];
-        $preferredOrder = ['General', 'Laporan', 'Absensi', 'Data Master', 'Manajemen'];
+        $preferredOrder = ['General', 'Laporan', 'Absensi', 'Data Master', 'Manajemen', 'Pengaturan'];
 
         foreach ($preferredOrder as $groupName) {
             if (!array_key_exists($groupName, $groups)) {

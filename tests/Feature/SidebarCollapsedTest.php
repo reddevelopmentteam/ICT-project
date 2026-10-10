@@ -21,11 +21,14 @@ class SidebarCollapsedTest extends TestCase
             ->assertOk()
             ->getContent();
 
-        // Server-rendered static class (Alpine :class binding never contains this exact suffix).
-        $this->assertStringContainsString(
-            'relative sidebar-collapsed"',
+        // Server-rendered static class on the aside element. Whitespace between
+        // the last utility and the Blade conditional is not stable (prettier
+        // reformats it), but the Alpine :class binding never contains this
+        // exact `...)] sidebar-collapsed"` suffix.
+        $this->assertMatchesRegularExpression(
+            '/shadow-\[8px_0_30px_rgba\(0,0,0,0\.15\)\]\s+sidebar-collapsed"/',
             $html,
-            'Aside must carry the server-rendered collapsed class when the cookie is set.'
+            'Aside must carry the server-rendered collapsed class when the cookie is set.',
         );
     }
 
@@ -37,10 +40,10 @@ class SidebarCollapsedTest extends TestCase
             ->getContent();
 
         $this->assertStringContainsString('id="app-sidebar"', $html);
-        $this->assertStringNotContainsString(
-            'relative sidebar-collapsed"',
+        $this->assertDoesNotMatchRegularExpression(
+            '/shadow-\[8px_0_30px_rgba\(0,0,0,0\.15\)\]\s+sidebar-collapsed"/',
             $html,
-            'Aside must not carry the server-rendered collapsed class without the cookie.'
+            'Aside must not carry the server-rendered collapsed class without the cookie.',
         );
     }
 

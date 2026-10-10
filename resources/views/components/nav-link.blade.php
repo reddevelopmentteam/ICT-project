@@ -92,6 +92,10 @@
             'active' => 'mdi:gear',
             'inactive' => 'mdi:gear-outline'
         ],
+        'refresh' => [
+            'active' => 'mdi:cog-refresh',
+            'inactive' => 'mdi:cog-refresh-outline'
+        ],
 
     ];
 
